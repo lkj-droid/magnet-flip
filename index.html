@@ -1,0 +1,2222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<title>Magnet Flip — Free Magnetic Chain Puzzle Game</title>
+<meta name="description" content="Play Magnet Flip, a free magnetic chain puzzle game in your browser. Tap a tile to flip it and its four neighbours, complete a full row or column of one colour, and chain the clear for bonus moves. A new Daily Challenge board for the whole world every day at 00:00 UTC, plus an endless classic run. No download, no sign-up." />
+<meta name="keywords" content="magnet flip, magnetic puzzle game, chain puzzle, free browser game, daily puzzle game, line clear puzzle, html5 puzzle, no download game" />
+<meta name="author" content="Magnet Flip" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="theme-color" content="#070b13" />
+<meta name="color-scheme" content="dark" />
+<meta name="application-name" content="Magnet Flip" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Magnet Flip" />
+<link rel="canonical" href="https://lkj-droid.github.io/magnet-flip/" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Magnet Flip" />
+<meta property="og:title" content="Magnet Flip — Free Magnetic Chain Puzzle Game" />
+<meta property="og:description" content="Flip tiles, line up a full row, and chain the clear. A free browser puzzle with a daily board everyone shares — no download, no sign-up." />
+<meta property="og:url" content="https://lkj-droid.github.io/magnet-flip/" />
+<meta property="og:image" content="https://lkj-droid.github.io/magnet-flip/og-cover.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Magnet Flip: glowing blue N and red S tiles on a dark grid" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Magnet Flip — Free Magnetic Chain Puzzle Game" />
+<meta name="twitter:description" content="Tap to flip a plus-shape of tiles. Complete a line to clear it. Chain clears for bonus moves. Daily board resets at 00:00 UTC." />
+<meta name="twitter:image" content="https://lkj-droid.github.io/magnet-flip/og-cover.png" />
+<meta name="twitter:image:alt" content="Magnet Flip: glowing blue N and red S tiles on a dark grid" />
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="favicon.svg" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "Magnet Flip",
+  "alternateName": "Magnet Flip — Magnetic Chain Puzzle",
+  "url": "https://lkj-droid.github.io/magnet-flip/",
+  "description": "A free browser puzzle game. Tap a tile to flip it and its four orthogonal neighbours, fill a complete row or column with one colour to clear it, and chain the clear for bonus moves. Includes a daily challenge board shared by every player and a classic endless run.",
+  "genre": ["Puzzle", "Logic", "Arcade"],
+  "gamePlatform": ["Web browser", "Mobile web", "Desktop"],
+  "applicationCategory": "Game",
+  "operatingSystem": "Any",
+  "inLanguage": "en",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "image": "https://lkj-droid.github.io/magnet-flip/og-cover.png",
+  "publisher": { "@type": "Organization", "name": "Magnet Flip" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is Magnet Flip free to play?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Magnet Flip is completely free. There is no download, no sign-up, no in-app purchase and no advertising on the page." }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I play Magnet Flip?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Tap any tile to flip it together with the tiles directly above, below, left and right of it. When a whole row or column shows the same colour, that line snaps away and the tiles above drop down. Every line you clear pays moves back." }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the Daily Challenge?",
+      "acceptedAnswer": { "@type": "Answer", "text": "One board per day, generated from the UTC date, so every player in the world gets exactly the same puzzle. It resets at 00:00 UTC. When the run ends you can copy a result with your score and an emoji map of your board to share anywhere." }
+    },
+    {
+      "@type": "Question",
+      "name": "Does Magnet Flip need an internet connection?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. The whole game is a single page that runs in your browser. Once it has loaded it makes no network requests at all, so it keeps playing even if your connection drops." }
+    },
+    {
+      "@type": "Question",
+      "name": "Where is my score saved?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Only in your own browser's local storage, on your device. Nothing is uploaded. Clearing your browser's site data removes your best scores and today's result." }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I play Magnet Flip on my phone?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. The board scales to fit any phone screen and is played with taps. On a computer you can click with the mouse or use the arrow keys and Enter." }
+    }
+  ]
+}
+</script>
+
+<style>
+  *,*::before,*::after{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  :root{
+    --font:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    --ink:#eaf0fd;
+    --dim:rgba(178,196,230,.60);
+    --line:rgba(130,170,255,.14);
+    --blue:#3f7cff;
+    --red:#e8344f;
+    --gold:#ffc53d;
+  }
+  html,body{margin:0;padding:0;min-height:100%;background:#04060b}
+  body{font-family:var(--font);color:var(--ink);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow:hidden}
+  .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+  [hidden]{display:none!important}
+
+  #app{display:flex;flex-direction:column;align-items:center;min-height:100dvh}
+  #hero{width:100%;height:100dvh;display:grid;place-items:center;position:relative}
+
+  #stage{position:relative;width:min(100vw,540px);height:100dvh;overflow:hidden;
+         touch-action:none;user-select:none;-webkit-user-select:none;
+         background:linear-gradient(180deg,#0a1120 0%,#070b14 55%,#04070d 100%)}
+  #cv{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;outline:none}
+  #cv:focus-visible{box-shadow:inset 0 0 0 2px rgba(120,170,255,.45)}
+
+  /* ---------------- HUD ---------------- */
+  #hud{position:absolute;top:0;left:0;right:0;display:flex;align-items:flex-start;justify-content:space-between;
+       padding:calc(env(safe-area-inset-top,0px) + 20px) 22px 0;pointer-events:none;z-index:3}
+  .score-box{display:flex;flex-direction:column;gap:2px;min-width:0}
+  .score-box .lbl{font-size:9.5px;font-weight:800;letter-spacing:.2em;color:var(--dim);white-space:nowrap}
+  #score{font-size:clamp(30px,9vw,40px);font-weight:900;line-height:1.02;font-variant-numeric:tabular-nums;
+         letter-spacing:-.01em;text-shadow:0 6px 24px rgba(90,140,255,.28);display:inline-block;transform-origin:left center}
+  .best{font-size:11.5px;color:var(--dim);font-weight:600}
+  .best b{color:rgba(214,228,255,.86);font-weight:800}
+  .hud-right{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+  .btns{display:flex;gap:8px;pointer-events:auto}
+  .icon-btn{width:38px;height:38px;border-radius:12px;border:1px solid var(--line);
+            background:rgba(20,30,50,.55);color:rgba(210,226,255,.85);display:grid;place-items:center;cursor:pointer;
+            -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);transition:transform .12s,background .18s,color .18s;
+            padding:0;font-family:var(--font)}
+  .icon-btn:hover{background:rgba(30,44,72,.75);color:#fff}
+  .icon-btn:active{transform:scale(.93)}
+  .icon-btn svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .icon-btn .fill{fill:currentColor;stroke:none}
+  #muteBtn.muted{color:rgba(255,140,150,.92)}
+  .moves-chip{position:relative;pointer-events:none;min-width:98px;padding:9px 14px 11px;border-radius:16px;
+              border:1px solid var(--line);background:linear-gradient(180deg,rgba(28,40,64,.72),rgba(14,22,38,.72));
+              box-shadow:0 12px 30px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.06);text-align:right;
+              transition:border-color .25s,box-shadow .25s}
+  .moves-chip .lbl{display:block;font-size:9.5px;letter-spacing:.14em;color:var(--dim);font-weight:700}
+  #moves{display:inline-block;font-size:27px;font-weight:900;line-height:1.1;font-variant-numeric:tabular-nums;transform-origin:right center}
+  .moves-chip .bar{margin-top:5px;height:3px;border-radius:2px;background:rgba(255,255,255,.09);overflow:hidden}
+  .moves-chip .bar i{display:block;height:100%;width:66%;border-radius:2px;
+                     background:linear-gradient(90deg,#3f7cff,#8fb9ff);transition:width .3s ease,background .3s}
+  .moves-chip.low{border-color:rgba(255,120,140,.5);box-shadow:0 12px 30px rgba(255,60,90,.16),inset 0 1px 0 rgba(255,255,255,.06)}
+  .moves-chip.low #moves{color:#ff8d9d;animation:lowPulse 1.4s ease-in-out infinite}
+  .moves-chip.low .bar i{background:linear-gradient(90deg,#ff4d68,#ff9aa6)}
+  @keyframes lowPulse{0%,100%{opacity:1}50%{opacity:.55}}
+  @keyframes bump{0%{transform:scale(1)}40%{transform:scale(1.16)}100%{transform:scale(1)}}
+  .move-pop{position:absolute;z-index:4;font-size:15px;font-weight:900;color:#8dffc4;
+            text-shadow:0 0 14px rgba(70,230,150,.7),0 2px 8px rgba(0,0,0,.7);
+            animation:movePop .95s cubic-bezier(.2,.8,.2,1) forwards;pointer-events:none}
+  @keyframes movePop{0%{opacity:0;transform:translateY(8px) scale(.7)}
+    18%{opacity:1;transform:translateY(0) scale(1.12)}30%{transform:scale(1)}
+    70%{opacity:1}100%{opacity:0;transform:translateY(-30px) scale(1)}}
+  .bump{animation:bump .3s ease-out}
+
+  /* ---------------- banner ---------------- */
+  #banner{position:absolute;left:0;right:0;top:33%;z-index:4;display:flex;flex-direction:column;align-items:center;gap:3px;
+          pointer-events:none;opacity:0}
+  #banner.show{animation:bannerPop 1.05s cubic-bezier(.2,.9,.2,1) forwards}
+  #bannerMain{font-size:36px;font-weight:900;letter-spacing:-.01em;line-height:1.05;color:#ffffff;text-align:center;
+              text-shadow:0 0 26px rgba(120,170,255,.75),0 3px 0 rgba(20,45,120,.55),0 8px 24px rgba(0,0,0,.55)}
+  #bannerSub{font-size:12.5px;font-weight:900;letter-spacing:.1em;color:#8dffc4;text-transform:uppercase;
+             text-shadow:0 0 16px rgba(70,230,150,.55),0 2px 10px rgba(0,0,0,.6)}
+  @keyframes bannerPop{
+    0%{opacity:0;transform:translateY(12px) scale(.7)}
+    16%{opacity:1;transform:translateY(0) scale(1.09)}
+    28%{transform:scale(1)}
+    70%{opacity:1}
+    100%{opacity:0;transform:translateY(-20px) scale(1)}
+  }
+
+  /* ---------------- footer ---------------- */
+  #foot{position:absolute;left:0;right:0;bottom:0;padding:0 20px calc(env(safe-area-inset-bottom,0px) + 14px);
+        text-align:center;pointer-events:none;z-index:2}
+  #hint{margin:0;font-size:12px;color:rgba(160,182,220,.55);letter-spacing:.02em;transition:color .3s}
+  #hint b{color:rgba(190,214,255,.85);font-weight:800}
+  .foot-links{margin:7px 0 0;display:flex;justify-content:center;align-items:center;gap:8px;pointer-events:auto}
+  .linkbtn{background:none;border:0;padding:2px 1px;font-family:var(--font);font-size:11px;font-weight:600;
+           color:rgba(150,174,212,.55);cursor:pointer;text-decoration:none;transition:color .18s}
+  .linkbtn:hover{color:rgba(205,222,255,.9)}
+  .foot-links span{color:rgba(150,174,212,.3);font-size:10px}
+
+  /* ---------------- overlays ---------------- */
+  .overlay{position:absolute;inset:0;z-index:5;display:flex;align-items:center;justify-content:center;padding:22px 24px;
+           background:radial-gradient(62% 52% at 50% 42%,rgba(8,14,26,.74),rgba(4,7,13,.95));
+           -webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px);
+           opacity:0;pointer-events:none;transition:opacity .3s ease;overflow-y:auto}
+  .overlay.show{opacity:1;pointer-events:auto}
+  .ov-inner{width:100%;max-width:344px;margin:auto;text-align:center;transform:translateY(10px);
+            transition:transform .36s cubic-bezier(.2,.8,.2,1)}
+  .overlay.show .ov-inner{transform:none}
+
+  .mag{position:relative;width:60px;height:60px;margin:0 auto 14px;border-radius:18px;
+       background:linear-gradient(100deg,#2f63f0 0%,#2f63f0 49.4%,#e8344f 50.6%,#e8344f 100%);
+       box-shadow:0 16px 40px rgba(60,100,255,.3),inset 0 1px 0 rgba(255,255,255,.4),inset 0 -8px 18px rgba(0,0,0,.28);
+       transform:perspective(420px) rotateY(-16deg) rotateX(6deg)}
+  .mag b,.mag i{position:absolute;top:0;bottom:0;width:50%;display:grid;place-items:center;
+                font-style:normal;font-weight:900;font-size:19px;color:rgba(255,255,255,.95);
+                text-shadow:0 2px 8px rgba(0,0,0,.35)}
+  .mag b{left:0}
+  .mag i{right:0}
+  .mag::after{content:"";position:absolute;left:50%;top:12%;bottom:12%;width:2px;margin-left:-1px;
+              background:rgba(6,10,20,.55);border-radius:2px}
+
+  .brand h1{margin:0;font-size:34px;font-weight:900;letter-spacing:.01em;line-height:1;
+            background:linear-gradient(180deg,#ffffff,#a9bfe8);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .brand h1 span{background:linear-gradient(180deg,#ffa3ae,#e8344f);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .brand .tag{margin:7px 0 0;font-size:10.5px;font-weight:800;letter-spacing:.28em;color:rgba(160,184,226,.7);text-transform:uppercase}
+
+  /* mode cards */
+  .mode-grid{display:flex;flex-direction:column;gap:9px;margin-top:16px}
+  .mode-card{display:flex;align-items:center;gap:11px;width:100%;padding:11px 12px;border-radius:15px;
+             border:1px solid rgba(120,160,240,.14);background:linear-gradient(180deg,rgba(26,38,62,.74),rgba(13,20,34,.74));
+             color:var(--ink);font-family:var(--font);cursor:pointer;text-align:left;
+             transition:transform .12s,border-color .18s,box-shadow .18s;box-shadow:0 10px 24px rgba(0,0,0,.25)}
+  .mode-card:hover{border-color:rgba(130,175,255,.4);box-shadow:0 12px 28px rgba(50,90,255,.18)}
+  .mode-card:active{transform:scale(.992)}
+  .mode-card .ic{flex:0 0 38px;height:38px;border-radius:12px;display:grid;place-items:center;
+                 background:rgba(63,124,255,.16);border:1px solid rgba(90,150,255,.28);color:#bcd4ff}
+  .mode-card .ic svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .mode-card.daily .ic{background:rgba(255,190,60,.12);border-color:rgba(255,200,80,.3);color:#ffd675}
+  .mode-card .txt{flex:1;min-width:0}
+  .mode-card .t{display:block;font-size:14px;font-weight:900;letter-spacing:.005em}
+  .mode-card .badge{display:inline-block;margin-left:5px;padding:1px 6px;border-radius:6px;font-size:9px;font-weight:900;
+                    letter-spacing:.04em;color:#ffdb8a;background:rgba(255,190,60,.12);border:1px solid rgba(255,200,80,.22);vertical-align:1px}
+  .mode-card .s{display:block;font-size:10.5px;color:rgba(178,196,230,.62);margin-top:2px;line-height:1.32;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mode-card .m{display:block;font-size:10px;color:rgba(150,176,216,.55);margin-top:3px;font-variant-numeric:tabular-nums}
+  .mode-card .m b{color:rgba(214,230,255,.9);font-weight:800}
+  .mode-card .go{flex:0 0 auto;color:rgba(150,180,230,.45)}
+  .mode-card .go svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+  .howto{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:7px;text-align:left}
+  .howto li{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:12px;
+            border:1px solid rgba(120,160,240,.09);background:linear-gradient(180deg,rgba(24,36,60,.42),rgba(13,20,34,.42))}
+  .howto b{flex:0 0 19px;height:19px;border-radius:6px;display:grid;place-items:center;
+           font-size:10px;font-weight:900;color:#bcd4ff;background:rgba(63,124,255,.18);border:1px solid rgba(90,150,255,.3)}
+  .howto span{font-size:11.5px;line-height:1.4;color:rgba(196,212,240,.82);font-weight:500}
+  .howto em{font-style:normal;font-weight:800;color:#dce9ff}
+  .howto li:nth-child(2) b{color:#ffc0c8;background:rgba(232,52,79,.16);border-color:rgba(255,90,110,.28)}
+  .howto li:nth-child(3) b{color:#a9f0c8;background:rgba(60,220,150,.13);border-color:rgba(80,230,160,.26)}
+
+  .menu-foot{margin-top:14px;display:flex;flex-direction:column;align-items:center;gap:6px}
+  .menu-links{display:flex;align-items:center;gap:8px}
+  .menu-links span{color:rgba(150,174,212,.3);font-size:10px}
+  .tiny{margin:0;font-size:10px;letter-spacing:.04em;color:rgba(140,162,200,.5)}
+
+  .cta{width:100%;margin-top:12px;padding:15px;border:0;border-radius:15px;cursor:pointer;
+       font-family:var(--font);font-size:16px;font-weight:900;letter-spacing:.02em;color:#fff;
+       background:linear-gradient(180deg,#4a83ff,#2350e0);
+       box-shadow:0 14px 30px rgba(50,90,255,.34),inset 0 1px 0 rgba(255,255,255,.4);
+       transition:transform .12s,box-shadow .12s}
+  .cta:active{transform:translateY(1px) scale(.99);box-shadow:0 8px 18px rgba(50,90,255,.3),inset 0 1px 0 rgba(255,255,255,.4)}
+  .cta.alt{background:linear-gradient(180deg,rgba(40,58,92,.9),rgba(22,34,56,.9));border:1px solid rgba(130,170,255,.22);
+           box-shadow:0 10px 24px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.08);color:#dce8ff;font-size:14.5px;padding:13px}
+  .cta.alt:hover{border-color:rgba(130,170,255,.42)}
+
+  .over-kicker{margin:0 0 5px;font-size:10px;font-weight:800;letter-spacing:.28em;color:rgba(255,120,140,.85);text-transform:uppercase}
+  #overSub{margin:0 0 8px;font-size:11px;font-weight:700;letter-spacing:.06em;color:rgba(160,184,226,.65)}
+  #overReason{margin:0 0 4px;font-size:14px;font-weight:700;color:rgba(196,212,240,.8)}
+  #overScore{font-size:58px;font-weight:900;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.02em;
+             background:linear-gradient(180deg,#ffffff,#9fc0ff);-webkit-background-clip:text;background-clip:text;color:transparent;
+             filter:drop-shadow(0 8px 30px rgba(90,140,255,.4))}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:18px 0 0}
+  .stats>div{padding:9px 5px;border-radius:12px;border:1px solid rgba(120,160,240,.10);background:rgba(18,28,48,.55)}
+  .stats span{display:block;font-size:8.5px;letter-spacing:.07em;color:rgba(160,182,220,.6);margin-bottom:4px;font-weight:700;text-transform:uppercase}
+  .stats b{font-size:17px;font-weight:900;font-variant-numeric:tabular-nums;color:#e9f1ff}
+  .newbest{display:inline-block;margin:14px 0 0;padding:5px 13px;border-radius:999px;
+           font-size:10px;font-weight:900;letter-spacing:.16em;color:#0b1322;
+           background:linear-gradient(180deg,#ffe9a3,#ffc53d);box-shadow:0 8px 24px rgba(255,190,60,.3)}
+  .hidden{display:none!important}
+  .over-links{margin-top:8px;display:flex;justify-content:center;gap:10px}
+
+  /* toast */
+  #toast{position:absolute;left:50%;bottom:100px;transform:translate(-50%,10px);z-index:9;padding:10px 16px;border-radius:12px;
+         background:rgba(16,26,44,.96);border:1px solid rgba(130,175,255,.28);font-size:12.5px;font-weight:700;color:#e8f0ff;
+         opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;box-shadow:0 12px 30px rgba(0,0,0,.55);white-space:nowrap}
+  #toast.show{opacity:1;transform:translate(-50%,0)}
+
+  /* ---------------- modals ---------------- */
+  .modal{position:fixed;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;padding:18px;
+         background:rgba(3,6,12,.74);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+  .modal-card{width:100%;max-width:520px;max-height:86vh;display:flex;flex-direction:column;
+              border-radius:20px;border:1px solid rgba(130,170,255,.2);background:linear-gradient(180deg,#0e1626,#080d18);
+              box-shadow:0 40px 100px rgba(0,0,0,.7);overflow:hidden}
+  .modal-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;
+              border-bottom:1px solid rgba(130,170,255,.12)}
+  .modal-head h2{margin:0;font-size:16px;font-weight:900;letter-spacing:.01em}
+  .modal-body{padding:16px 18px 22px;overflow-y:auto;font-size:13.5px;line-height:1.65;color:rgba(196,212,240,.86);
+              -webkit-overflow-scrolling:touch}
+  .modal-body h3{margin:18px 0 6px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:rgba(160,190,235,.75)}
+  .modal-body h3:first-child{margin-top:0}
+  .modal-body p{margin:0 0 10px}
+  .modal-body ul,.modal-body ol{margin:0 0 10px;padding-left:20px}
+  .modal-body li{margin:0 0 6px}
+  .modal-body b,.modal-body strong{color:#eaf2ff}
+  .modal-body a{color:#8fb9ff}
+  .modal-body .kbd{display:inline-block;padding:1px 6px;border-radius:5px;border:1px solid rgba(130,170,255,.3);
+                   background:rgba(30,44,72,.7);font-size:11px;font-weight:800;color:#dce8ff;font-family:var(--font)}
+  .share-box{width:100%;min-height:150px;margin-top:10px;padding:10px 12px;border-radius:12px;border:1px solid rgba(130,170,255,.25);
+             background:rgba(8,14,26,.9);color:#dce8ff;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;
+             line-height:1.5;resize:vertical}
+
+  /* ---------------- desktop info shelf ---------------- */
+  #info{display:none}
+  @media (min-width:900px){
+    body{overflow:auto}
+    #app{min-height:100dvh}
+    #hero{height:auto;padding:26px 0 10px;min-height:0}
+    #stage{height:min(calc(100dvh - 74px),860px);border-radius:24px;
+           box-shadow:0 40px 110px rgba(0,0,0,.7),inset 0 0 0 1px rgba(130,170,255,.16)}
+    #info{display:block;width:min(880px,100%);padding:9px 28px 70px;color:rgba(196,212,240,.82)}
+    #info h2{margin:34px 0 10px;font-size:19px;font-weight:900;letter-spacing:.01em;color:#eef4ff}
+    #info h2:first-child{margin-top:18px}
+    #info p{margin:0 0 12px;font-size:14px;line-height:1.75;color:rgba(190,206,235,.8)}
+    #info .lede{font-size:15.5px;color:rgba(214,228,255,.9)}
+    #info .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:6px 0 4px}
+    #info .card{padding:16px 18px;border-radius:16px;border:1px solid rgba(130,170,255,.14);
+                background:linear-gradient(180deg,rgba(20,32,54,.6),rgba(10,16,28,.6))}
+    #info .card h3{margin:0 0 6px;font-size:13.5px;font-weight:900;color:#e9f1ff;letter-spacing:.01em}
+    #info .card p{margin:0;font-size:12.8px;line-height:1.65;color:rgba(178,196,230,.72)}
+    #info ol{margin:0 0 12px;padding-left:20px;font-size:14px;line-height:1.8;color:rgba(190,206,235,.8)}
+    #info table{width:100%;border-collapse:collapse;margin:6px 0 14px;font-size:13.5px}
+    #info th,#info td{padding:8px 10px;text-align:left;border-bottom:1px solid rgba(130,170,255,.12);color:rgba(190,206,235,.85)}
+    #info th{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(150,178,220,.7);font-weight:800}
+    #info details{padding:12px 14px;margin-bottom:8px;border-radius:12px;border:1px solid rgba(130,170,255,.12);
+                  background:rgba(16,26,44,.5)}
+    #info summary{cursor:pointer;font-size:13.5px;font-weight:800;color:#e7efff;list-style:none}
+    #info summary::-webkit-details-marker{display:none}
+    #info summary::before{content:"+";display:inline-block;width:16px;color:#8fb9ff;font-weight:900}
+    #info details[open] summary::before{content:"–"}
+    #info details p{margin:8px 0 0;padding-left:16px;font-size:13px;line-height:1.7;color:rgba(178,196,230,.78)}
+    #info .site-foot{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;
+                     margin-top:36px;padding-top:18px;border-top:1px solid rgba(130,170,255,.12);
+                     font-size:12px;color:rgba(150,174,212,.55)}
+    #info .site-foot .linkbtn{font-size:12px;color:rgba(160,188,232,.7)}
+  }
+
+  @media (max-height:700px){
+    .brand h1{font-size:28px}
+    .mag{width:48px;height:48px;margin-bottom:9px;border-radius:14px}
+    .howto{margin-top:12px;gap:6px}
+    .howto li{padding:6px 9px}
+    .mode-grid{margin-top:12px;gap:7px}
+    .mode-card{padding:9px 10px}
+    .cta{padding:13px;margin-top:10px}
+    #overScore{font-size:46px}
+    .stats{margin-top:12px}
+    .overlay{padding:14px 18px}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important}
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="hero">
+    <div id="stage">
+      <canvas id="cv" tabindex="0" role="application" aria-label="Magnet Flip game board, 5 by 5 tiles" aria-describedby="cvHelp"></canvas>
+      <p id="cvHelp" class="sr-only">A 5 by 5 grid of magnetic tiles, blue north and red south. Tap a tile, or use the arrow keys to move the cursor and Enter to flip. Flipping turns the chosen tile and the tiles above, below, left and right of it. Fill a whole row or column with one colour to clear it.</p>
+
+      <div id="hud">
+        <div class="score-box">
+          <span class="lbl" id="modeLbl">MAGNET FLIP</span>
+          <span id="score">0</span>
+          <span class="best">BEST <b id="bestVal">0</b></span>
+        </div>
+        <div class="hud-right">
+          <div class="btns">
+            <button id="muteBtn" class="icon-btn" type="button" aria-label="Mute sound" aria-pressed="false">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path class="fill" d="M4.6 9.3h3.1L12 5.6a.7.7 0 0 1 1.1.6v11.6a.7.7 0 0 1-1.1.6l-4.3-3.7H4.6z"/>
+                <path class="waves" d="M16.1 8.7a4.6 4.6 0 0 1 0 6.6"/>
+                <path class="waves" d="M18.7 6.2a8.1 8.1 0 0 1 0 11.6"/>
+                <path class="slash" d="M16.4 8.4l5.6 7.2"/>
+              </svg>
+            </button>
+            <button id="homeBtn" class="icon-btn" type="button" aria-label="Back to menu">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3.8 10.6 12 4.2l8.2 6.4"/>
+                <path d="M6.2 9.6v9.1a1 1 0 0 0 1 1h9.6a1 1 0 0 0 1-1V9.6"/>
+              </svg>
+            </button>
+          </div>
+          <div class="moves-chip" id="movesChip">
+            <span class="lbl">MOVES</span>
+            <span id="moves">20</span>
+            <div class="bar"><i id="movesBar"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="banner" aria-hidden="true"><b id="bannerMain"></b><span id="bannerSub"></span></div>
+
+      <div id="foot">
+        <p id="hint">Tap a tile to flip it and its <b>four neighbours</b></p>
+        <div class="foot-links">
+          <button class="linkbtn" type="button" data-modal="how">How to play</button>
+          <span>·</span>
+          <button class="linkbtn" type="button" data-modal="privacy">Privacy</button>
+        </div>
+      </div>
+
+      <div id="menu" class="overlay show">
+        <div class="ov-inner">
+          <div class="mag" aria-hidden="true"><b>N</b><i>S</i></div>
+          <div class="brand">
+            <h1>MAGNET <span>FLIP</span></h1>
+            <p class="tag">Flip · Match · Chain</p>
+          </div>
+
+          <div class="mode-grid">
+            <button id="dailyBtn" class="mode-card daily" type="button">
+              <span class="ic" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M8 3.2v3.4M16 3.2v3.4M3.5 10h17"/><path d="M12 13v4.2M10 15.2h4"/></svg>
+              </span>
+              <span class="txt">
+                <span class="t">Daily Challenge <span class="badge" id="dailyDay">#1</span></span>
+                <span class="s">One board for everyone, worldwide</span>
+                <span class="m"><span id="dailyBest">Today's best —</span> · <span id="dailyReset">resets 00:00 UTC</span></span>
+              </span>
+              <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></span>
+            </button>
+
+            <button id="classicBtn" class="mode-card" type="button">
+              <span class="ic" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20.3 4.4v5.1h-5.1"/></svg>
+              </span>
+              <span class="txt">
+                <span class="t">Classic Run</span>
+                <span class="s">Fresh board · 20 moves · chain for more</span>
+                <span class="m"><span id="classicBest">Personal best —</span> · no time limit</span>
+              </span>
+              <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></span>
+            </button>
+          </div>
+
+          <ul class="howto">
+            <li><b>1</b><span>Tap a tile — it flips <em>itself and four neighbours</em></span></li>
+            <li><b>2</b><span>Fill a <em>full row or column</em> with one colour to snap it away</span></li>
+            <li><b>3</b><span>Every clear pays <em>moves back</em>; chain it to keep the run</span></li>
+          </ul>
+
+          <div class="menu-foot">
+            <div class="menu-links">
+              <button class="linkbtn" type="button" data-modal="how">How to play</button>
+              <span>·</span>
+              <button class="linkbtn" type="button" data-modal="privacy">Privacy</button>
+            </div>
+            <p class="tiny">No download · No sign-up · Saved only in your browser</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="over" class="overlay">
+        <div class="ov-inner">
+          <p class="over-kicker" id="overKicker">GAME OVER</p>
+          <p id="overSub">Classic run</p>
+          <p id="overReason">Out of moves</p>
+          <div id="overScore">0</div>
+          <div class="stats">
+            <div><span>Lines</span><b id="overLines">0</b></div>
+            <div><span>Best chain</span><b id="overChain">–</b></div>
+            <div><span id="overBestLbl">Personal best</span><b id="overBest">0</b></div>
+          </div>
+          <p id="newBest" class="newbest hidden">NEW BEST</p>
+          <button id="againBtn" class="cta" type="button">Play again</button>
+          <button id="shareBtn" class="cta alt" type="button">Share result</button>
+          <div class="over-links">
+            <button id="menuBtn" class="linkbtn" type="button">Back to menu</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="toast" role="status" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <section id="info" aria-labelledby="aboutTitle">
+    <h2 id="aboutTitle">Magnet Flip: a five-tile twist on the match puzzle</h2>
+    <p class="lede">Magnet Flip is a free puzzle game that plays in your browser in seconds. Every tap flips a small cross of magnetic tiles — the one you touch plus the four around it. Line up five of the same colour, watch the row snap away, and use the moves it pays back to keep the run going.</p>
+    <p>There is nothing to install and no account to make. The game is one small page that runs entirely on your device, so it works on a laptop, a tablet or a phone, online or offline once loaded.</p>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Daily Challenge</h3>
+        <p>One board a day, built from the UTC date, so every player in the world opens exactly the same puzzle. It resets at 00:00 UTC. Finish a run and copy a result with your score and an emoji map of your board to share anywhere.</p>
+      </div>
+      <div class="card">
+        <h3>Classic Run</h3>
+        <p>A fresh random board every time. You start with 20 moves and there is no clock — clear lines to earn more and see how far one run can go. Your personal best is kept on your device.</p>
+      </div>
+    </div>
+
+    <h2>How to play</h2>
+    <ol>
+      <li><b>Tap any tile.</b> It flips, and so do the tiles directly above, below, left and right of it — five in total, fewer at the edges of the board.</li>
+      <li><b>Complete a line.</b> When a whole row or column shows one colour, the line flashes and snaps away, and the tiles above drop down to fill the gap with fresh tiles from the top.</li>
+      <li><b>Chain the drop.</b> If the new tiles complete another line straight away, the clear chains. Each step of a chain scores higher and pays more moves.</li>
+      <li><b>Spend your moves carefully.</b> Every tap costs one move. Run out and the run ends — but a clear on your last move adds moves before the game checks.</li>
+    </ol>
+
+    <h2>Scoring and moves</h2>
+    <table>
+      <thead><tr><th>What happens</th><th>Points</th><th>Moves</th></tr></thead>
+      <tbody>
+        <tr><td>One line cleared</td><td>100 × chain step</td><td>+2</td></tr>
+        <tr><td>Two lines at once</td><td>400 × chain step</td><td>+4</td></tr>
+        <tr><td>Any line on a chain step</td><td>multiplied by the step</td><td>+3 extra</td></tr>
+        <tr><td>Moves you can hold</td><td>—</td><td>30 maximum</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Questions</h2>
+    <details><summary>Is Magnet Flip free to play?</summary><p>Yes. Magnet Flip is completely free. There is no download, no sign-up, no in-app purchase and no advertising on the page.</p></details>
+    <details><summary>How do I play Magnet Flip?</summary><p>Tap any tile to flip it together with the tiles directly above, below, left and right of it. When a whole row or column shows the same colour, that line snaps away and the tiles above drop down. Every line you clear pays moves back.</p></details>
+    <details><summary>What is the Daily Challenge?</summary><p>One board per day, generated from the UTC date, so every player in the world gets exactly the same puzzle. It resets at 00:00 UTC. When the run ends you can copy a result with your score and an emoji map of your board to share anywhere.</p></details>
+    <details><summary>Does Magnet Flip need an internet connection?</summary><p>No. The whole game is a single page that runs in your browser. Once it has loaded it makes no network requests at all, so it keeps playing even if your connection drops.</p></details>
+    <details><summary>Where is my score saved?</summary><p>Only in your own browser's local storage, on your device. Nothing is uploaded. Clearing your browser's site data removes your best scores and today's result.</p></details>
+    <details><summary>Can I play Magnet Flip on my phone?</summary><p>Yes. The board scales to fit any phone screen and is played with taps. On a computer you can click with the mouse or use the arrow keys and Enter.</p></details>
+
+    <div class="site-foot">
+      <span>© 2026 Magnet Flip · A free browser puzzle</span>
+      <span>
+        <button class="linkbtn" type="button" data-modal="how">How to play</button>
+        <button class="linkbtn" type="button" data-modal="privacy">Privacy</button>
+      </span>
+    </div>
+  </section>
+</div>
+
+<div id="howModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="howTitle" hidden>
+  <div class="modal-card">
+    <div class="modal-head">
+      <h2 id="howTitle">How to play</h2>
+      <button class="icon-btn" type="button" data-close aria-label="Close">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <h3>The tap</h3>
+      <p>Tap or click a tile and it flips, together with the tiles <b>above, below, left and right</b> of it. A tile in the middle of the board flips five; a corner flips three.</p>
+      <h3>The clear</h3>
+      <p>When a complete <b>row or column</b> shows a single colour, the line snaps away, the tiles above fall, and new tiles drop in from the top. If those new tiles complete another line, the clear <b>chains</b> and scores more.</p>
+      <h3>Moves</h3>
+      <p>Each tap costs one move. A cleared line pays <b>+2 moves</b>, and any clear on a chain step pays <b>+3 more</b>. You can hold at most 30. When your moves reach zero and nothing is left to clear, the run ends.</p>
+      <h3>Controls</h3>
+      <p><span class="kbd">Arrow keys</span> move the board cursor, <span class="kbd">Enter</span> flips the selected tile, <span class="kbd">R</span> restarts, <span class="kbd">M</span> mutes, <span class="kbd">Esc</span> closes dialogs.</p>
+      <h3>Daily Challenge</h3>
+      <p>Everyone gets the same board for the UTC day, and it resets at <b>00:00 UTC</b>. When your run ends, press <b>Share result</b> to copy your score and an emoji map of your board.</p>
+    </div>
+  </div>
+</div>
+
+<div id="privacyModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="privacyTitle" hidden>
+  <div class="modal-card">
+    <div class="modal-head">
+      <h2 id="privacyTitle">Privacy</h2>
+      <button class="icon-btn" type="button" data-close aria-label="Close">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p><b>The short version: nothing you do here leaves your device.</b></p>
+      <h3>No accounts, no tracking</h3>
+      <p>Magnet Flip has no sign-up, no cookies, no analytics, no advertising and no third-party scripts. The page makes no requests to any other server while you play.</p>
+      <h3>What is stored</h3>
+      <p>Your personal best, today's Daily Challenge result and your sound setting are kept in your browser's <b>local storage</b> so the game can show them again next time. They stay on this device and are never uploaded. Clearing your browser's site data deletes them.</p>
+      <h3>Sharing</h3>
+      <p><b>Share result</b> only copies a line of text to your clipboard. It sends nothing anywhere; you decide where to paste it.</p>
+      <h3>Children</h3>
+      <p>The game collects no personal information from anyone, including children.</p>
+      <h3>Questions</h3>
+      <p>This is a small static game page. If it is served from a personal GitHub Pages site, the host may keep standard web-server access logs, as any website does; the game itself adds nothing to them.</p>
+    </div>
+  </div>
+</div>
+
+<div id="shareModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="shareTitle" hidden>
+  <div class="modal-card">
+    <div class="modal-head">
+      <h2 id="shareTitle">Your result</h2>
+      <button class="icon-btn" type="button" data-close aria-label="Close">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>Copy this text and paste it wherever you like.</p>
+      <textarea id="shareField" class="share-box" readonly aria-label="Shareable result text"></textarea>
+    </div>
+  </div>
+</div>
+
+<div id="askModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="askTitle" hidden>
+  <div class="modal-card">
+    <div class="modal-head">
+      <h2 id="askTitle">Leave this run?</h2>
+      <button class="icon-btn" type="button" data-close aria-label="Close">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p id="askText">Your score for this run will be lost.</p>
+      <button id="askYes" class="cta" type="button">Leave run</button>
+      <button id="askNo" class="cta alt" type="button">Keep playing</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+/* ============================================================
+   0. CONFIG
+   ============================================================ */
+const COLS = 5, ROWS = 5;
+const START_MOVES = 20;
+const MAX_MOVES = 30;
+const TAU = Math.PI * 2;
+const SITE_URL = 'https://lkj-droid.github.io/magnet-flip/';
+const DAILY_EPOCH_UTC = Date.UTC(2026, 10, 26);   // 2026-11-26 is Daily #1
+
+const LS = {
+  classicBest: 'magnetflip.classic.best.v1',
+  legacyBest: 'magnetflip.best.v1',
+  mute: 'magnetflip.muted.v1',
+  daily: 'magnetflip.daily.v1'
+};
+
+const ANG_K = 180, ANG_C = 19;      // angular spring (flip)
+const DROP_K = 230, DROP_C = 31;    // vertical spring (gravity drop)
+
+const PAL = [
+  { letter:'N',
+    top:'#6d97ff', mid:'#2f63f0', bot:'#122e94',
+    rim:'rgba(160,196,255,.75)', glow:'rgba(70,120,255,',
+    spark:'#9dbcff', tint:'#2f63f0' },
+  { letter:'S',
+    top:'#ff8b96', mid:'#e8344f', bot:'#7f0a1f',
+    rim:'rgba(255,180,190,.72)', glow:'rgba(255,70,95,',
+    spark:'#ffb0ba', tint:'#e8344f' }
+];
+
+/* ============================================================
+   1. DOM
+   ============================================================ */
+const cv = document.getElementById('cv');
+const ctx = cv.getContext('2d');
+const stage = document.getElementById('stage');
+const hudEl = document.getElementById('hud');
+const footEl = document.getElementById('foot');
+const $ = id => document.getElementById(id);
+const elScore = $('score'), elBest = $('bestVal'), elMoves = $('moves'),
+      elMovesChip = $('movesChip'), elMovesBar = $('movesBar'), elModeLbl = $('modeLbl'),
+      elBanner = $('banner'), elBannerMain = $('bannerMain'), elBannerSub = $('bannerSub'),
+      elHint = $('hint'), elMenu = $('menu'), elOver = $('over'), elToast = $('toast'),
+      elOverKicker = $('overKicker'), elOverSub = $('overSub'), elOverReason = $('overReason'),
+      elOverScore = $('overScore'), elOverLines = $('overLines'), elOverChain = $('overChain'),
+      elOverBest = $('overBest'), elOverBestLbl = $('overBestLbl'),
+      elNewBest = $('newBest'), elMute = $('muteBtn'), elHome = $('homeBtn'),
+      elShare = $('shareBtn'), elAgain = $('againBtn'), elMenuBtn = $('menuBtn'),
+      elDailyBtn = $('dailyBtn'), elClassicBtn = $('classicBtn'),
+      elDailyDay = $('dailyDay'), elDailyBest = $('dailyBest'), elDailyReset = $('dailyReset'),
+      elClassicBest = $('classicBest'), elLive = document.createElement('div'),
+      elShareField = $('shareField');
+
+elLive.className = 'sr-only';
+elLive.setAttribute('aria-live', 'polite');
+elLive.setAttribute('aria-atomic', 'true');
+document.body.appendChild(elLive);
+
+/* ============================================================
+   2. AUDIO (generated with Web Audio — no files)
+   ============================================================ */
+const Sfx = (function(){
+  let ac = null, master = null;
+  let muted = false;
+  try { muted = localStorage.getItem(LS.mute) === '1'; } catch(e){}
+
+  function ensure(){
+    if (muted) return ac;
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return null;
+    if (!ac){
+      try {
+        ac = new AC();
+        master = ac.createGain();
+        master.gain.value = 0.55;
+        master.connect(ac.destination);
+      } catch(e){ return null; }
+    }
+    if (ac.state === 'suspended') { try { ac.resume(); } catch(e){} }
+    return ac;
+  }
+
+  function tone(f0, f1, dur, type, vol, delay){
+    if (muted) return;
+    const a = ensure(); if (!a || !master) return;
+    const t0 = a.currentTime + (delay || 0);
+    const o = a.createOscillator(), g = a.createGain();
+    o.type = type || 'sine';
+    o.frequency.setValueAtTime(Math.max(30, f0), t0);
+    if (f1 && f1 !== f0) o.frequency.exponentialRampToValueAtTime(Math.max(30, f1), t0 + dur);
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.exponentialRampToValueAtTime(Math.max(0.001, vol || 0.2), t0 + 0.008);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    o.connect(g); g.connect(master);
+    o.start(t0); o.stop(t0 + dur + 0.03);
+  }
+
+  function noise(dur, vol, freq, kind){
+    if (muted) return;
+    const a = ensure(); if (!a || !master) return;
+    const n = Math.max(1, (a.sampleRate * dur) | 0);
+    const buf = a.createBuffer(1, n, a.sampleRate);
+    const d = buf.getChannelData(0);
+    for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / n, 2.4);
+    const src = a.createBufferSource(); src.buffer = buf;
+    const f = a.createBiquadFilter(); f.type = kind || 'bandpass';
+    f.frequency.value = freq || 1200; f.Q.value = 1.1;
+    const g = a.createGain(); g.gain.value = vol || 0.15;
+    src.connect(f); f.connect(g); g.connect(master);
+    src.start();
+  }
+
+  return {
+    resume(){ ensure(); },
+    flip(i){ tone(560 + i * 34, 760 + i * 34, 0.075, 'triangle', 0.085); noise(0.03, 0.045, 2800, 'highpass'); },
+    clear(step, n){
+      tone(240, 130, 0.24, 'sine', 0.26);
+      noise(0.16, 0.10, 800, 'lowpass');
+      const seq = [0, 4, 7, 12];
+      const count = 3 + Math.min(n, 3);
+      for (let i = 0; i < count; i++){
+        const semi = seq[i % seq.length] + Math.min(step - 1, 4) * 2;
+        tone(660 * Math.pow(2, semi / 12), 0, 0.13, 'triangle', 0.085, 0.035 * i);
+      }
+    },
+    chain(step){
+      tone(520 * Math.pow(1.14, Math.min(step, 6)), 0, 0.2, 'triangle', 0.13);
+      tone(780 * Math.pow(1.14, Math.min(step, 6)), 0, 0.16, 'sine', 0.07, 0.05);
+    },
+    over(){ [392, 311, 233].forEach((f, i) => tone(f, f * 0.97, 0.55, 'sine', 0.2, i * 0.17)); },
+    start(){ tone(300, 620, 0.16, 'triangle', 0.14); tone(620, 940, 0.13, 'triangle', 0.09, 0.09); },
+    toggle(){
+      muted = !muted;
+      try { localStorage.setItem(LS.mute, muted ? '1' : '0'); } catch(e){}
+      if (master) master.gain.value = muted ? 0 : 0.55;
+      if (!muted) tone(680, 900, 0.09, 'triangle', 0.1);
+      return muted;
+    },
+    prime(){ ensure(); },
+    get muted(){ return muted; },
+    get state(){ return ac ? ac.state : 'none'; }
+  };
+})();
+
+/* ============================================================
+   3. STATE
+   ============================================================ */
+let W = 360, H = 720, DPR = 1;
+let BX = 0, BY = 0, STEP = 70, TILE = 63, BW = 350, BH = 350;
+
+let state = 'menu';      // menu | play | over
+let phase = 'idle';      // idle | flip | resolve | clear | drop | over
+let phaseUntil = 0;
+let curStep = 0;
+let dropMin = 0;
+
+let mode = 'classic';    // classic | daily
+let dailyKey = null;
+let clockOverride = null;
+let rngFn = null;
+
+let score = 0, best = 0, bestAtStart = 0, classicBest = 0;
+let moves = START_MOVES;
+let chainStep = 0, maxChain = 0, linesTotal = 0, taps = 0;
+let lock = false;
+
+let cells = [];
+let time = 0, lastT = 0;
+let shake = 0, flash = 0;
+
+let particles = [], floats = [], rings = [], flashes = [];
+
+let hover = { r: -1, c: -1, until: 0 };
+let cursor = { r: 2, c: 2, on: false };
+let refillQueue = null;
+
+let lastShare = { text: '', copied: false };
+
+/* ============================================================
+   4. SMALL HELPERS
+   ============================================================ */
+const clamp = (v, a, b) => v < a ? a : (v > b ? b : v);
+const fmt = n => Number(n).toLocaleString('en-US');
+const REDUCED = (function(){
+  try { return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; }
+  catch(e){ return false; }
+})();
+
+function now(){ return clockOverride === null ? Date.now() : clockOverride; }
+
+function utcKey(ms){
+  const d = new Date(ms);
+  return d.getUTCFullYear() + '-' + String(d.getUTCMonth() + 1).padStart(2, '0') + '-' +
+         String(d.getUTCDate()).padStart(2, '0');
+}
+function dayNo(key){
+  return Math.round((Date.parse(key + 'T00:00:00Z') - DAILY_EPOCH_UTC) / 86400000) + 1;
+}
+function dayLabel(key){
+  return new Date(key + 'T12:00:00Z').toLocaleDateString('en-US',
+    { month:'short', day:'numeric', year:'numeric', timeZone:'UTC' });
+}
+function msToReset(){
+  const ms = now();
+  const d = new Date(ms);
+  const next = Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() + 1);
+  return Math.max(0, next - ms);
+}
+function countdownText(){
+  const s = Math.floor(msToReset() / 1000);
+  const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60);
+  if (h >= 1) return 'resets in ' + h + 'h ' + String(m).padStart(2, '0') + 'm';
+  return 'resets in ' + m + 'm ' + String(s % 60).padStart(2, '0') + 's';
+}
+
+/* seeded RNG (mulberry32) + xmur3 string hash */
+function xmur3(str){
+  let h = 1779033703 ^ str.length;
+  for (let i = 0; i < str.length; i++){
+    h = Math.imul(h ^ str.charCodeAt(i), 3432918353);
+    h = (h << 13) | (h >>> 19);
+  }
+  return function(){
+    h = Math.imul(h ^ (h >>> 16), 2246822507);
+    h = Math.imul(h ^ (h >>> 13), 3266489909);
+    return (h ^= h >>> 16) >>> 0;
+  };
+}
+function mulberry32(a){
+  return function(){
+    a |= 0; a = (a + 0x6D2B79F5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+function rnd(){ return rngFn ? rngFn() : Math.random(); }   // board randomness only
+function frnd(){ return Math.random(); }                    // effects — never touches the daily seed
+function rndColor(){ return rnd() < 0.5 ? 0 : 1; }
+
+function idx(r, c){ return r * COLS + c; }
+
+function colorOf(cell){
+  return cell.base ^ ((Math.round(cell.angT / Math.PI) & 1));
+}
+function faceColor(cell){
+  return cell.base ^ ((Math.floor((cell.ang + Math.PI / 2) / Math.PI) & 1));
+}
+
+function pathRound(g, x, y, w, h, r){
+  r = Math.min(r, w / 2, h / 2);
+  g.beginPath();
+  g.moveTo(x + r, y);
+  g.arcTo(x + w, y, x + w, y + h, r);
+  g.arcTo(x + w, y + h, x, y + h, r);
+  g.arcTo(x, y + h, x, y, r);
+  g.arcTo(x, y, x + w, y, r);
+  g.closePath();
+}
+
+function cellX(c){ return BX + c * STEP + (STEP - TILE) / 2; }
+function cellY(r){ return BY + r * STEP + (STEP - TILE) / 2; }
+
+/* ============================================================
+   5. LAYOUT
+   ============================================================ */
+function layout(){
+  const rect = stage.getBoundingClientRect();
+  W = Math.max(240, Math.round(rect.width));
+  H = Math.max(320, Math.round(rect.height));
+  DPR = clamp(window.devicePixelRatio || 1, 1, 3);
+
+  cv.width = Math.round(W * DPR);
+  cv.height = Math.round(H * DPR);
+  cv.style.width = W + 'px';
+  cv.style.height = H + 'px';
+
+  const hudBottom = hudEl.getBoundingClientRect().bottom - rect.top;
+  const footTop = footEl.getBoundingClientRect().top - rect.top;
+  const top = hudBottom + 12;
+  const avail = Math.max(180, footTop - top - 12);
+
+  STEP = Math.min((W - 34) / COLS, avail / ROWS);
+  TILE = STEP * 0.905;
+  BW = STEP * COLS;
+  BH = STEP * ROWS;
+  BX = (W - BW) / 2;
+  BY = top + (avail - BH) / 2;
+
+  buildStaticLayers();
+  buildTileSprites();
+
+  const gap = BY - hudBottom;
+  elBanner.style.top = (gap > 78 ? BY - 74 : BY + BH * 0.3) + 'px';
+}
+
+/* ============================================================
+   5b. CACHED LAYERS + TILE SPRITES
+   ============================================================ */
+let bgLayer = null, boardLayer = null, vigLayer = null;
+let tileSprites = null;
+const SPR_M = 0.34;
+
+function makeCanvas(w, h){
+  const c = document.createElement('canvas');
+  c.width = Math.max(1, Math.round(w));
+  c.height = Math.max(1, Math.round(h));
+  return c;
+}
+
+function buildStaticLayers(){
+  bgLayer = makeCanvas(W * DPR, H * DPR);
+  const g = bgLayer.getContext('2d');
+  g.scale(DPR, DPR);
+
+  const base = g.createLinearGradient(0, 0, 0, H);
+  base.addColorStop(0, '#0a1122');
+  base.addColorStop(0.52, '#070b15');
+  base.addColorStop(1, '#04070d');
+  g.fillStyle = base;
+  g.fillRect(0, 0, W, H);
+
+  const p1 = g.createRadialGradient(W * 0.16, H * 0.12, 0, W * 0.16, H * 0.12, W * 0.85);
+  p1.addColorStop(0, 'rgba(60,110,255,.13)');
+  p1.addColorStop(1, 'rgba(60,110,255,0)');
+  g.fillStyle = p1;
+  g.fillRect(0, 0, W, H);
+
+  const p2 = g.createRadialGradient(W * 0.9, H * 0.94, 0, W * 0.9, H * 0.94, W * 0.75);
+  p2.addColorStop(0, 'rgba(255,60,90,.09)');
+  p2.addColorStop(1, 'rgba(255,60,90,0)');
+  g.fillStyle = p2;
+  g.fillRect(0, 0, W, H);
+
+  g.strokeStyle = 'rgba(140,180,255,.035)';
+  g.lineWidth = 1;
+  const step = Math.max(36, W / 10);
+  for (let x = (W % step) / 2; x < W; x += step){
+    g.beginPath(); g.moveTo(x, 0); g.lineTo(x, H); g.stroke();
+  }
+  for (let y = (H % step) / 2; y < H; y += step){
+    g.beginPath(); g.moveTo(0, y); g.lineTo(W, y); g.stroke();
+  }
+
+  boardLayer = makeCanvas(W * DPR, H * DPR);
+  const b = boardLayer.getContext('2d');
+  b.scale(DPR, DPR);
+  const pad = STEP * 0.17;
+
+  pathRound(b, BX - pad, BY - pad, BW + pad * 2, BH + pad * 2, STEP * 0.38);
+  const pg = b.createLinearGradient(0, BY - pad, 0, BY + BH + pad);
+  pg.addColorStop(0, 'rgba(19,30,52,.92)');
+  pg.addColorStop(0.55, 'rgba(12,20,36,.94)');
+  pg.addColorStop(1, 'rgba(8,13,24,.95)');
+  b.fillStyle = pg;
+  b.fill();
+  b.strokeStyle = 'rgba(130,170,255,.13)';
+  b.lineWidth = 1;
+  b.stroke();
+
+  b.save();
+  pathRound(b, BX - pad + 1.5, BY - pad + 1.5, BW + pad * 2 - 3, BH + pad * 2 - 3, STEP * 0.38);
+  b.clip();
+  const hl = b.createLinearGradient(0, BY - pad, 0, BY - pad + STEP * 0.55);
+  hl.addColorStop(0, 'rgba(180,210,255,.10)');
+  hl.addColorStop(1, 'rgba(180,210,255,0)');
+  b.fillStyle = hl;
+  b.fillRect(BX - pad, BY - pad, BW + pad * 2, STEP * 0.55);
+  b.restore();
+
+  for (let r = 0; r < ROWS; r++){
+    for (let c = 0; c < COLS; c++){
+      const x = cellX(c), y = cellY(r);
+      pathRound(b, x, y, TILE, TILE, TILE * 0.235);
+      b.fillStyle = 'rgba(5,9,17,.62)';
+      b.fill();
+      b.strokeStyle = 'rgba(120,160,240,.05)';
+      b.lineWidth = 1;
+      b.stroke();
+    }
+  }
+
+  vigLayer = makeCanvas(W * DPR, H * DPR);
+  const v = vigLayer.getContext('2d');
+  v.scale(DPR, DPR);
+  const vg = v.createRadialGradient(W / 2, H * 0.48, Math.min(W, H) * 0.34,
+                                    W / 2, H * 0.48, Math.max(W, H) * 0.8);
+  vg.addColorStop(0, 'rgba(0,0,0,0)');
+  vg.addColorStop(0.65, 'rgba(0,0,0,0.22)');
+  vg.addColorStop(1, 'rgba(0,0,0,0.62)');
+  v.fillStyle = vg;
+  v.fillRect(0, 0, W, H);
+}
+
+function paintTileFace(g, size, pal){
+  const r = size * 0.235;
+
+  g.save();
+  g.shadowColor = pal.glow + '0.45)';
+  g.shadowBlur = size * 0.26;
+  pathRound(g, 0, 0, size, size, r);
+  g.fillStyle = pal.mid;
+  g.fill();
+  g.restore();
+
+  const bg = g.createLinearGradient(0, -size * 0.1, 0, size * 1.05);
+  bg.addColorStop(0, pal.top);
+  bg.addColorStop(0.52, pal.mid);
+  bg.addColorStop(1, pal.bot);
+  pathRound(g, 0, 0, size, size, r);
+  g.fillStyle = bg;
+  g.fill();
+
+  g.save();
+  pathRound(g, 0, 0, size, size, r);
+  g.clip();
+  const bev = g.createLinearGradient(0, 0, 0, size * 0.45);
+  bev.addColorStop(0, 'rgba(255,255,255,.32)');
+  bev.addColorStop(1, 'rgba(255,255,255,0)');
+  g.fillStyle = bev;
+  g.fillRect(0, 0, size, size * 0.45);
+  const bot = g.createLinearGradient(0, size * 0.7, 0, size);
+  bot.addColorStop(0, 'rgba(0,0,0,0)');
+  bot.addColorStop(1, 'rgba(0,0,0,.26)');
+  g.fillStyle = bot;
+  g.fillRect(0, size * 0.7, size, size * 0.3);
+  g.restore();
+
+  pathRound(g, 0.8, 0.8, size - 1.6, size - 1.6, size * 0.225);
+  g.strokeStyle = pal.rim;
+  g.lineWidth = Math.max(1, size * 0.018);
+  g.stroke();
+
+  pathRound(g, size * 0.24, size * 0.135, size * 0.52, size * 0.075, size * 0.038);
+  g.fillStyle = 'rgba(255,255,255,.22)';
+  g.fill();
+
+  g.font = '900 ' + (size * 0.36).toFixed(1) + 'px "Inter",system-ui,sans-serif';
+  g.textAlign = 'center';
+  g.textBaseline = 'middle';
+  g.fillStyle = 'rgba(6,10,20,.28)';
+  g.fillText(pal.letter, size / 2, size * 0.565 + size * 0.012);
+  g.fillStyle = 'rgba(255,255,255,.95)';
+  g.fillText(pal.letter, size / 2, size * 0.565);
+}
+
+function buildTileSprites(){
+  const S = Math.max(8, Math.round(TILE * DPR));
+  const M = Math.round(TILE * SPR_M * DPR);
+  const full = S + M * 2;
+  tileSprites = [];
+  for (let k = 0; k < 2; k++){
+    const c = makeCanvas(full, full);
+    const g = c.getContext('2d');
+    g.translate(M, M);
+    g.scale(S / TILE, S / TILE);
+    paintTileFace(g, TILE, PAL[k]);
+    tileSprites.push(c);
+  }
+}
+
+/* ============================================================
+   6. BOARD MODEL
+   ============================================================ */
+function makeCell(color){
+  return { base: color, ang: 0, angT: 0, av: 0, dy: 0, dv: 0,
+           appear: 1, clr: 0, vx: 0, vy: 0, puls: 0 };
+}
+
+function findLinesIn(colors){
+  const lines = [];
+  for (let r = 0; r < ROWS; r++){
+    let ok = true;
+    for (let c = 1; c < COLS; c++) if (colors[idx(r, c)] !== colors[idx(r, 0)]) { ok = false; break; }
+    if (ok) lines.push({ dir: 'r', i: r, color: colors[idx(r, 0)] });
+  }
+  for (let c = 0; c < COLS; c++){
+    let ok = true;
+    for (let r = 1; r < ROWS; r++) if (colors[idx(r, c)] !== colors[idx(0, c)]) { ok = false; break; }
+    if (ok) lines.push({ dir: 'c', i: c, color: colors[idx(0, c)] });
+  }
+  return lines;
+}
+
+function findLines(){
+  return findLinesIn(cells.map(colorOf));
+}
+
+function randomBoard(){
+  for (let attempt = 0; attempt < 400; attempt++){
+    const b = new Array(COLS * ROWS);
+    for (let i = 0; i < b.length; i++) b[i] = rndColor();
+    if (findLinesIn(b).length === 0) return b;
+  }
+  const b = new Array(COLS * ROWS);
+  for (let i = 0; i < b.length; i++) b[i] = i % 2;
+  return b;
+}
+
+function applyBoard(board, spawnAnim){
+  cells = board.map(c => makeCell(c));
+  if (spawnAnim){
+    for (let i = 0; i < cells.length; i++){
+      const r = Math.floor(i / COLS);
+      cells[i].dy = -(STEP * (ROWS - r + 0.6));
+      cells[i].dv = 0;
+      cells[i].appear = 0;
+    }
+  }
+  particles.length = 0; floats.length = 0; rings.length = 0; flashes.length = 0;
+  shake = 0; flash = 0;
+}
+
+/* ============================================================
+   7. HUD + MENU
+   ============================================================ */
+function bump(node){
+  if (!node) return;
+  node.classList.remove('bump');
+  void node.offsetWidth;
+  node.classList.add('bump');
+}
+
+function updateHud(withPulse){
+  elScore.textContent = fmt(score);
+  elMoves.textContent = String(Math.max(0, moves));
+  elBest.textContent = fmt(best);
+
+  const pct = clamp((moves / MAX_MOVES) * 100, 0, 100);
+  elMovesBar.style.width = pct + '%';
+  elMovesChip.classList.toggle('low', moves <= 5);
+
+  if (withPulse){ bump(elScore); bump(elMoves); }
+  if (score > best){ best = score; elBest.textContent = fmt(best); }
+}
+
+function setHint(html){ elHint.innerHTML = html; }
+
+function announce(text){ elLive.textContent = text; }
+
+function showMovePop(n){
+  const d = document.createElement('span');
+  d.className = 'move-pop';
+  d.textContent = '+' + n;
+  const st = stage.getBoundingClientRect();
+  const ch = elMovesChip.getBoundingClientRect();
+  d.style.top = Math.round(ch.bottom - st.top + 2) + 'px';
+  d.style.right = Math.round(st.right - ch.right + 12) + 'px';
+  stage.appendChild(d);
+  setTimeout(() => { if (d.parentNode) d.parentNode.removeChild(d); }, 980);
+}
+
+let lastBannerText = '';
+function showBanner(main, sub){
+  lastBannerText = main + ' | ' + sub;
+  elBannerMain.textContent = main;
+  elBannerSub.textContent = sub;
+  elBanner.classList.remove('show');
+  void elBanner.offsetWidth;
+  elBanner.classList.add('show');
+}
+function hideBanner(){ elBanner.classList.remove('show'); }
+
+let toastTimer = null;
+function toast(text){
+  elToast.textContent = text;
+  elToast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => elToast.classList.remove('show'), 2200);
+}
+
+/* ---- storage ---- */
+function readJSON(key){
+  try { const raw = localStorage.getItem(key); return raw ? JSON.parse(raw) : null; } catch(e){ return null; }
+}
+function writeJSON(key, value){
+  try { localStorage.setItem(key, JSON.stringify(value)); } catch(e){}
+}
+function loadClassicBest(){
+  try {
+    const v = parseInt(localStorage.getItem(LS.classicBest), 10);
+    if (isFinite(v) && v >= 0) return v;
+    const legacy = parseInt(localStorage.getItem(LS.legacyBest), 10);
+    if (isFinite(legacy) && legacy >= 0) return legacy;
+  } catch(e){}
+  return 0;
+}
+function saveClassicBest(){ try { localStorage.setItem(LS.classicBest, String(classicBest)); } catch(e){} }
+
+function dailyRecord(){
+  const rec = readJSON(LS.daily);
+  if (!rec || typeof rec.date !== 'string') return null;
+  const key = utcKey(now());
+  return rec.date === key ? rec : null;
+}
+function saveDailyResult(key){
+  let rec = readJSON(LS.daily);
+  if (!rec || rec.date !== key) rec = { date: key, best: 0, bestLines: 0, bestChain: 0, attempts: 0 };
+  rec.attempts = (rec.attempts || 0) + 1;
+  if (score > (rec.best || 0)){
+    rec.best = score; rec.bestLines = linesTotal; rec.bestChain = maxChain;
+  }
+  writeJSON(LS.daily, rec);
+  return rec;
+}
+
+function refreshMenu(){
+  const key = utcKey(now());
+  const rec = dailyRecord();
+  elDailyDay.textContent = '#' + dayNo(key);
+  elDailyBest.textContent = rec && rec.best ? ('Today\u2019s best ' + fmt(rec.best)) : 'Today\u2019s best \u2014';
+  elDailyReset.textContent = countdownText();
+  elClassicBest.textContent = classicBest ? ('Personal best ' + fmt(classicBest)) : 'Personal best \u2014';
+  elDailyBtn.setAttribute('aria-label',
+    'Daily Challenge, day ' + dayNo(key) + ', ' + dayLabel(key) +
+    (rec && rec.best ? ', today\u2019s best ' + fmt(rec.best) : ', not played yet'));
+}
+
+/* ============================================================
+   8. GAME FLOW
+   ============================================================ */
+function startMode(m){
+  mode = m;
+  cursor.on = false;
+  if (m === 'daily'){
+    dailyKey = utcKey(now());
+    rngFn = mulberry32(xmur3('magnetflip|' + dailyKey)());
+    const rec = dailyRecord();
+    best = (rec && rec.best) ? rec.best : 0;
+  } else {
+    dailyKey = null;
+    rngFn = null;
+    best = classicBest;
+  }
+  newGame();
+}
+
+function newGame(){
+  state = 'play';
+  phase = 'idle';
+  lock = false;
+  score = 0;
+  moves = START_MOVES;
+  chainStep = 0;
+  maxChain = 0;
+  linesTotal = 0;
+  taps = 0;
+  bestAtStart = best;
+  curStep = 0;
+  refillQueue = null;
+  cursor = { r: 2, c: 2, on: false };
+
+  elMenu.classList.remove('show');
+  elOver.classList.remove('show');
+  elNewBest.classList.add('hidden');
+  hideBanner();
+
+  elModeLbl.textContent = mode === 'daily' ? ('DAILY #' + dayNo(dailyKey)) : 'CLASSIC RUN';
+  setHint(mode === 'daily'
+    ? '<b>Daily #' + dayNo(dailyKey) + '</b> \u00b7 the same board for everyone'
+    : 'Tap a tile to flip it and its <b>four neighbours</b>');
+
+  layout();
+  applyBoard(randomBoard(), true);
+  updateHud(true);
+  Sfx.start();
+  announce(mode === 'daily' ? 'Daily challenge started.' : 'Classic run started.');
+  try { cv.focus({ preventScroll: true }); } catch(e){}
+}
+
+function tapCell(r, c){
+  if (state !== 'play' || lock) return false;
+  if (r < 0 || r >= ROWS || c < 0 || c >= COLS) return false;
+  if (moves <= 0) return false;
+
+  taps++;
+  moves--;
+  updateHud(true);
+
+  hover = { r, c, until: time + 0.55 };
+  rings.push({ x: cellX(c) + TILE / 2, y: cellY(r) + TILE / 2, t: 0, life: 0.42, color: 'rgba(190,214,255,' });
+
+  const list = [[r, c]];
+  if (r > 0) list.push([r - 1, c]);
+  if (r < ROWS - 1) list.push([r + 1, c]);
+  if (c > 0) list.push([r, c - 1]);
+  if (c < COLS - 1) list.push([r, c + 1]);
+
+  list.forEach(function(pair){
+    const cell = cells[idx(pair[0], pair[1])];
+    if (!cell) return;
+    cell.angT += Math.PI;
+    cell.puls = 1;
+  });
+
+  Sfx.flip(c);
+  Sfx.resume();
+
+  lock = true;
+  phase = 'flip';
+  phaseUntil = time + 0.33;
+  return true;
+}
+
+function resolveStep(step){
+  const lines = findLines();
+
+  if (!lines.length){
+    chainStep = 0;
+    if (moves <= 0){ gameOver(); return; }
+    lock = false;
+    phase = 'idle';
+    cursor.on = true;
+    return;
+  }
+
+  chainStep = step;
+  curStep = step;
+  maxChain = Math.max(maxChain, step);
+
+  const n = lines.length;
+  linesTotal += n;
+
+  const gained = 100 * n * n * step;
+  score += gained;
+
+  const moveGain = 2 * n + (step > 1 ? 3 : 0);
+  moves = Math.min(MAX_MOVES, moves + moveGain);
+
+  const set = new Set();
+  const rowSet = new Set(), colSet = new Set();
+  for (let i = 0; i < lines.length; i++){
+    const line = lines[i];
+    if (line.dir === 'r'){
+      rowSet.add(line.i);
+      for (let c = 0; c < COLS; c++) set.add(idx(line.i, c));
+    } else {
+      colSet.add(line.i);
+      for (let r = 0; r < ROWS; r++) set.add(idx(r, line.i));
+    }
+  }
+  const cleared = Array.from(set);
+
+  let cx = 0, cy = 0;
+  for (let i = 0; i < cleared.length; i++){
+    const k = cleared[i];
+    cx += cellX(k % COLS) + TILE / 2;
+    cy += cellY(Math.floor(k / COLS)) + TILE / 2;
+  }
+  cx /= cleared.length; cy /= cleared.length;
+
+  for (let i = 0; i < cleared.length; i++){
+    const k = cleared[i];
+    const cell = cells[k];
+    if (!cell) continue;
+    cell.clr = 0.0001;
+    cell.puls = 1;
+    const tcx = cellX(k % COLS) + TILE / 2, tcy = cellY(Math.floor(k / COLS)) + TILE / 2;
+    cell.vx = (cx - tcx) * 0.14;
+    cell.vy = (cy - tcy) * 0.14;
+    spawnSparks(tcx, tcy, colorOf(cell), 5);
+  }
+
+  rowSet.forEach(function(r){ flashes.push({ dir:'r', i:r, t:0, life:0.42 }); });
+  colSet.forEach(function(c){ flashes.push({ dir:'c', i:c, t:0, life:0.42 }); });
+
+  floats.push({ x: cx, y: cy - TILE * 0.28, vy: -52, t: 0, life: 0.85,
+                text: '+' + fmt(gained), size: Math.min(TILE * 0.56, 30), color: '#ffffff' });
+
+  const mainTxt = step > 1 ? ('CHAIN \u00d7' + step) : (n > 1 ? (n + ' LINES!') : 'LINE CLEAR!');
+  showBanner(mainTxt, 'moves +' + moveGain);
+  showMovePop(moveGain);
+  announce((step > 1 ? 'Chain ' + step + '. ' : '') + n + (n === 1 ? ' line cleared. ' : ' lines cleared. ') +
+           '+' + gained + ' points. ' + Math.max(0, moves) + ' moves left.');
+
+  Sfx.clear(step, n);
+  if (step > 1) Sfx.chain(step);
+
+  shake = Math.min(1, 0.34 + 0.18 * n + (step > 1 ? 0.2 : 0));
+  flash = Math.min(0.75, 0.16 * n + (step > 1 ? 0.12 : 0));
+
+  if (navigator.vibrate) { try { navigator.vibrate(step > 1 ? [12, 26, 14] : 14); } catch(e){} }
+
+  updateHud(true);
+
+  phase = 'clear';
+  phaseUntil = time + 0.26;
+}
+
+function collapse(){
+  const next = new Array(COLS * ROWS).fill(null);
+
+  for (let c = 0; c < COLS; c++){
+    let write = ROWS - 1;
+    const survivors = [];
+    for (let r = ROWS - 1; r >= 0; r--){
+      const cell = cells[idx(r, c)];
+      if (!cell) continue;
+      if (cell.clr > 0) continue;
+      survivors.push({ cell: cell, r: r });
+    }
+    for (let i = 0; i < survivors.length; i++){
+      const s = survivors[i];
+      s.cell.dy += (s.r - write) * STEP;
+      s.cell.dv += 60;
+      next[idx(write, c)] = s.cell;
+      write--;
+    }
+    let spawnIndex = 0;
+    for (let r = write; r >= 0; r--){
+      const color = (refillQueue && refillQueue.length) ? refillQueue.shift() : rndColor();
+      const cell = makeCell(color);
+      cell.dy = -((r + 1) * STEP + spawnIndex * STEP * 0.55 + STEP * 0.15);
+      cell.dv = 0;
+      cell.appear = 0;
+      next[idx(r, c)] = cell;
+      spawnIndex++;
+    }
+  }
+  cells = next;
+}
+
+function gameOver(){
+  state = 'over';
+  phase = 'over';
+  lock = true;
+
+  const isBest = score > bestAtStart;
+
+  if (mode === 'daily'){
+    if (score > best) best = score;
+    saveDailyResult(dailyKey);
+  } else {
+    if (score > classicBest){ classicBest = score; saveClassicBest(); }
+    if (score > best) best = score;
+  }
+
+  elOverKicker.textContent = mode === 'daily' ? ('DAILY #' + dayNo(dailyKey)) : 'GAME OVER';
+  elOverSub.textContent = mode === 'daily' ? dayLabel(dailyKey) + ' \u00b7 board shared worldwide' : 'Classic run';
+  elOverReason.textContent = 'Out of moves';
+  elOverScore.textContent = fmt(score);
+  elOverLines.textContent = fmt(linesTotal);
+  elOverChain.textContent = maxChain > 1 ? ('\u00d7' + maxChain) : '\u2013';
+  elOverBestLbl.textContent = mode === 'daily' ? 'Today\u2019s best' : 'Personal best';
+  elOverBest.textContent = fmt(best);
+  elNewBest.textContent = mode === 'daily' ? 'NEW DAILY BEST' : 'NEW BEST';
+  elNewBest.classList.toggle('hidden', !isBest);
+  elAgain.textContent = mode === 'daily' ? 'Try today\u2019s board again' : 'Play again';
+  elOver.classList.add('show');
+  hideBanner();
+  setHint('Press <b>R</b> to play again');
+  updateHud(false);
+  Sfx.over();
+  announce('Run over. Score ' + score + '. ' + linesTotal + ' lines cleared.');
+  refreshMenu();
+}
+
+function goMenu(){
+  state = 'menu';
+  phase = 'idle';
+  lock = false;
+  rngFn = null;
+  cursor.on = false;
+  elOver.classList.remove('show');
+  elMenu.classList.add('show');
+  hideBanner();
+  score = 0;
+  moves = START_MOVES;
+  best = classicBest;
+  elModeLbl.textContent = 'MAGNET FLIP';
+  setHint('Tap a tile to flip it and its <b>four neighbours</b>');
+  applyBoard(randomBoard(), true);
+  updateHud(false);
+  refreshMenu();
+}
+
+function restartNow(){
+  if (state === 'menu') return;
+  newGame();
+}
+
+/* ---- share ---- */
+function emojiGrid(){
+  let out = '';
+  for (let r = 0; r < ROWS; r++){
+    let row = '';
+    for (let c = 0; c < COLS; c++){
+      const cell = cells[idx(r, c)];
+      row += (cell && faceColor(cell) === 0) ? '\ud83d\udfe6' : '\ud83d\udfe5';
+    }
+    out += row + (r < ROWS - 1 ? '\n' : '');
+  }
+  return out;
+}
+
+function shareText(){
+  const lines = [];
+  const stats = fmt(score) + ' pts \u00b7 ' + linesTotal + (linesTotal === 1 ? ' line' : ' lines') +
+                (maxChain > 1 ? ' \u00b7 chain \u00d7' + maxChain : '');
+  if (mode === 'daily'){
+    lines.push('\ud83e\uddf2 MAGNET FLIP \u2014 Daily #' + dayNo(dailyKey));
+    lines.push(dayLabel(dailyKey) + ' \u00b7 ' + stats);
+  } else {
+    lines.push('\ud83e\uddf2 MAGNET FLIP \u2014 Classic');
+    lines.push(stats);
+  }
+  lines.push('');
+  lines.push(emojiGrid());
+  lines.push('');
+  lines.push(SITE_URL);
+  return lines.join('\n');
+}
+
+function copyTextFallback(text){
+  try {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.top = '0';
+    ta.style.left = '0';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    ta.setSelectionRange(0, text.length);
+    const ok = document.execCommand('copy');
+    document.body.removeChild(ta);
+    return ok;
+  } catch(e){ return false; }
+}
+
+function doShare(){
+  const text = shareText();
+  const showField = function(){
+    elShareField.value = text;
+    openModal('shareModal');
+    setTimeout(function(){ try { elShareField.focus(); elShareField.select(); } catch(e){} }, 60);
+  };
+  lastShare = { text: text, copied: false };
+
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(function(){
+      lastShare.copied = true;
+      toast('Copied \u2014 paste it anywhere');
+      announce('Result copied to the clipboard.');
+    }, function(){
+      if (copyTextFallback(text)){
+        lastShare.copied = true;
+        toast('Copied \u2014 paste it anywhere');
+        announce('Result copied to the clipboard.');
+      } else {
+        showField();
+        toast('Select the text and copy it');
+      }
+    });
+  } else if (copyTextFallback(text)){
+    lastShare.copied = true;
+    toast('Copied \u2014 paste it anywhere');
+    announce('Result copied to the clipboard.');
+  } else {
+    showField();
+    toast('Select the text and copy it');
+  }
+}
+
+/* ============================================================
+   9. FX SPAWNERS
+   ============================================================ */
+function spawnSparks(x, y, colorIdx, count){
+  const pal = PAL[colorIdx] || PAL[0];
+  for (let i = 0; i < count; i++){
+    const a = frnd() * TAU;
+    const sp = 60 + frnd() * 190;
+    particles.push({
+      x: x, y: y,
+      vx: Math.cos(a) * sp,
+      vy: Math.sin(a) * sp - 40,
+      life: 0.34 + frnd() * 0.4,
+      t: 0,
+      size: 1.6 + frnd() * 2.6,
+      color: pal.spark,
+      grav: 320
+    });
+  }
+}
+
+/* ============================================================
+   10. UPDATE
+   ============================================================ */
+function allSettled(){
+  for (let i = 0; i < cells.length; i++){
+    const c = cells[i];
+    if (!c) continue;
+    if (Math.abs(c.dy) > 0.9 || Math.abs(c.dv) > 55) return false;
+  }
+  return true;
+}
+
+function updateCells(dt){
+  for (let i = 0; i < cells.length; i++){
+    const cell = cells[i];
+
+    if (cell.ang !== cell.angT || cell.av !== 0){
+      const acc = (cell.angT - cell.ang) * ANG_K - cell.av * ANG_C;
+      cell.av += acc * dt;
+      cell.ang += cell.av * dt;
+      if (Math.abs(cell.angT - cell.ang) < 0.012 && Math.abs(cell.av) < 0.4){
+        cell.ang = cell.angT; cell.av = 0;
+      }
+      if (cell.ang > TAU * 2 && cell.angT > TAU * 2){ cell.ang -= TAU * 2; cell.angT -= TAU * 2; }
+    }
+
+    if (cell.dy !== 0 || cell.dv !== 0){
+      const acc = (-cell.dy) * DROP_K - cell.dv * DROP_C;
+      cell.dv += acc * dt;
+      cell.dy += cell.dv * dt;
+      if (Math.abs(cell.dy) < 0.7 && Math.abs(cell.dv) < 26){ cell.dy = 0; cell.dv = 0; }
+    }
+
+    if (cell.appear < 1) cell.appear = Math.min(1, cell.appear + dt * 4.2);
+    if (cell.clr > 0) cell.clr = Math.min(1, cell.clr + dt / 0.26 + 0.001);
+    if (cell.puls > 0) cell.puls = Math.max(0, cell.puls - dt * 3.2);
+  }
+}
+
+let lastCountdown = 0;
+
+function update(dt){
+  time += dt;
+
+  const steps = Math.max(1, Math.ceil(dt / 0.011));
+  const h = dt / steps;
+  for (let i = 0; i < steps; i++) updateCells(h);
+
+  if (phase === 'flip' && time >= phaseUntil){
+    phase = 'resolve';
+    resolveStep(1);
+  } else if (phase === 'clear' && time >= phaseUntil){
+    collapse();
+    phase = 'drop';
+    phaseUntil = time + 0.8;
+    dropMin = time + 0.14;
+  } else if (phase === 'drop' && time >= dropMin && (time >= phaseUntil || allSettled())){
+    resolveStep(curStep + 1);
+  }
+
+  for (let i = particles.length - 1; i >= 0; i--){
+    const p = particles[i];
+    p.t += dt;
+    p.vy += p.grav * dt;
+    p.vx *= (1 - 1.6 * dt);
+    p.x += p.vx * dt;
+    p.y += p.vy * dt;
+    if (p.t >= p.life) particles.splice(i, 1);
+  }
+
+  for (let i = floats.length - 1; i >= 0; i--){
+    const f = floats[i];
+    f.t += dt;
+    f.y += f.vy * dt;
+    f.vy *= (1 - 1.2 * dt);
+    if (f.t >= f.life) floats.splice(i, 1);
+  }
+
+  for (let i = rings.length - 1; i >= 0; i--){
+    const r = rings[i];
+    r.t += dt;
+    if (r.t >= r.life) rings.splice(i, 1);
+  }
+
+  for (let i = flashes.length - 1; i >= 0; i--){
+    const f = flashes[i];
+    f.t += dt;
+    if (f.t >= f.life) flashes.splice(i, 1);
+  }
+
+  if (!REDUCED){
+    shake = Math.max(0, shake - dt * 2.6);
+    flash = Math.max(0, flash - dt * 2.4);
+  } else { shake = 0; flash = 0; }
+
+  if (hover.until !== Infinity && time > hover.until) hover = { r: -1, c: -1, until: 0 };
+
+  if (state === 'menu' && time - lastCountdown > 0.5){
+    lastCountdown = time;
+    elDailyReset.textContent = countdownText();
+  }
+}
+
+/* ============================================================
+   11. DRAW
+   ============================================================ */
+function drawBackdrop(){
+  if (bgLayer) ctx.drawImage(bgLayer, 0, 0, W, H);
+
+  const cx = W / 2, cy = BY + BH / 2;
+  ctx.save();
+  ctx.lineWidth = 1;
+  for (let i = 0; i < 4; i++){
+    const pulse = 1 + Math.sin(time * 0.55 + i * 1.1) * 0.012;
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, (BW * (0.72 + i * 0.16)) * pulse, (BH * (0.46 + i * 0.13)) * pulse,
+                Math.sin(time * 0.12 + i) * 0.05, 0, TAU);
+    ctx.strokeStyle = 'rgba(130,175,255,' + (0.06 - i * 0.009) + ')';
+    ctx.stroke();
+  }
+  ctx.restore();
+
+  if (boardLayer) ctx.drawImage(boardLayer, 0, 0, W, H);
+}
+
+function drawTile(cell, r, c){
+  if (!tileSprites) return;
+  const ang = cell.ang;
+  const cosv = Math.cos(ang);
+  const sx = Math.max(0.045, Math.abs(cosv));
+  const faceIdx = faceColor(cell);
+  const pal = PAL[faceIdx];
+  const clr = cell.clr;
+  const puls = cell.puls;
+  const appear = cell.appear;
+  const spr = tileSprites[faceIdx];
+
+  const alpha = (1 - clr) * appear;
+  if (alpha <= 0.01) return;
+
+  const scale = (1 - clr * 0.92) * (0.86 + 0.14 * appear);
+  const x = cellX(c) + TILE / 2 + cell.vx * clr;
+  const y = cellY(r) + cell.dy + TILE / 2 + cell.vy * clr;
+
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.translate(x, y);
+  ctx.scale(sx * scale, scale * (1 + 0.05 * Math.abs(Math.sin(ang))));
+
+  const M = TILE * SPR_M;
+  ctx.drawImage(spr, -TILE / 2 - M, -TILE / 2 - M, TILE + M * 2, TILE + M * 2);
+
+  if (clr > 0 && clr < 0.34){
+    ctx.globalAlpha = alpha * (1 - clr / 0.34) * 0.38;
+    ctx.fillStyle = '#ffffff';
+    pathRound(ctx, -TILE / 2, -TILE / 2, TILE, TILE, TILE * 0.235);
+    ctx.fill();
+  }
+
+  if (puls > 0.01){
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.globalAlpha = alpha * puls * 0.35;
+    ctx.fillStyle = pal.glow + '0.6)';
+    ctx.beginPath();
+    ctx.arc(0, 0, TILE * 0.72, 0, TAU);
+    ctx.fill();
+    ctx.globalCompositeOperation = 'source-over';
+  }
+  ctx.restore();
+
+  if (sx < 0.3){
+    ctx.save();
+    ctx.globalAlpha = (0.3 - sx) / 0.3 * 0.7 * alpha;
+    ctx.fillStyle = 'rgba(235,244,255,1)';
+    const gw = Math.max(1.5, TILE * 0.05);
+    const hh = TILE * 0.84 * scale;
+    pathRound(ctx, x - gw / 2, y - hh / 2, gw, hh, gw / 2);
+    ctx.fill();
+    ctx.restore();
+  }
+}
+
+function plusOf(r, c){
+  const list = [[r, c]];
+  if (r > 0) list.push([r - 1, c]);
+  if (r < ROWS - 1) list.push([r + 1, c]);
+  if (c > 0) list.push([r, c - 1]);
+  if (c < COLS - 1) list.push([r, c + 1]);
+  return list;
+}
+
+function drawHoverHint(){
+  if (state !== 'play' || lock) return;
+
+  if (hover.r >= 0 && time <= hover.until && hover.r < ROWS && hover.c < COLS){
+    const list = plusOf(hover.r, hover.c);
+    ctx.save();
+    ctx.setLineDash([STEP * 0.11, STEP * 0.1]);
+    ctx.lineWidth = Math.max(1.2, STEP * 0.022);
+    ctx.strokeStyle = 'rgba(198,220,255,.32)';
+    for (let i = 0; i < list.length; i++){
+      pathRound(ctx, cellX(list[i][1]) + 1, cellY(list[i][0]) + 1, TILE - 2, TILE - 2, TILE * 0.235);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  if (cursor.on && phase === 'idle' && !lock){
+    const r = cursor.r, c = cursor.c;
+    ctx.save();
+    ctx.shadowColor = 'rgba(140,185,255,.85)';
+    ctx.shadowBlur = STEP * 0.35;
+    ctx.lineWidth = Math.max(2, STEP * 0.045);
+    ctx.strokeStyle = 'rgba(215,232,255,.92)';
+    pathRound(ctx, cellX(c) + 1.5, cellY(r) + 1.5, TILE - 3, TILE - 3, TILE * 0.235);
+    ctx.stroke();
+    ctx.restore();
+  }
+}
+
+function drawFlashLines(){
+  for (let i = 0; i < flashes.length; i++){
+    const f = flashes[i];
+    const p = f.t / f.life;
+    const a = Math.sin(Math.min(1, p * 1.7) * Math.PI) * 0.42;
+    if (a <= 0.01) continue;
+    const band = STEP * 0.34;
+    let x, y, w, h;
+    const pad = STEP * 0.06;
+    if (f.dir === 'r'){
+      x = BX - pad; y = BY + f.i * STEP + (STEP - band) / 2;
+      w = BW + pad * 2; h = band;
+    } else {
+      x = BX + f.i * STEP + (STEP - band) / 2; y = BY - pad;
+      w = band; h = BH + pad * 2;
+    }
+    const g = f.dir === 'r'
+      ? ctx.createLinearGradient(x, y, x, y + h)
+      : ctx.createLinearGradient(x, y, x + w, y);
+    g.addColorStop(0, 'rgba(255,255,255,0)');
+    g.addColorStop(0.5, 'rgba(255,255,255,' + a + ')');
+    g.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = g;
+    pathRound(ctx, x, y, w, h, band / 2);
+    ctx.fill();
+  }
+}
+
+function drawRings(){
+  for (let i = 0; i < rings.length; i++){
+    const r = rings[i];
+    const p = r.t / r.life;
+    const rad = TILE * (0.16 + p * 0.62);
+    ctx.beginPath();
+    ctx.arc(r.x, r.y, rad, 0, TAU);
+    ctx.strokeStyle = r.color + (0.4 * (1 - p)) + ')';
+    ctx.lineWidth = Math.max(1, TILE * 0.04 * (1 - p));
+    ctx.stroke();
+  }
+}
+
+function drawFX(){
+  for (let i = 0; i < particles.length; i++){
+    const p = particles[i];
+    const a = 1 - p.t / p.life;
+    ctx.globalAlpha = Math.max(0, a);
+    ctx.fillStyle = p.color;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size * (0.5 + a * 0.7), 0, TAU);
+    ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+
+  for (let i = 0; i < floats.length; i++){
+    const f = floats[i];
+    const p = f.t / f.life;
+    const a = p < 0.09 ? p / 0.09 : (1 - Math.max(0, (p - 0.62) / 0.38));
+    ctx.globalAlpha = clamp(a, 0, 1);
+    ctx.font = '900 ' + f.size.toFixed(1) + 'px "Inter",system-ui,sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.lineJoin = 'round';
+    ctx.lineWidth = Math.max(3, f.size * 0.17);
+    ctx.strokeStyle = 'rgba(4,8,16,.72)';
+    ctx.strokeText(f.text, f.x, f.y + 1);
+    ctx.fillStyle = f.color;
+    ctx.fillText(f.text, f.x, f.y + 1);
+  }
+  ctx.globalAlpha = 1;
+}
+
+function render(){
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  ctx.clearRect(0, 0, W, H);
+
+  const sh = shake * 9;
+  ctx.save();
+  if (sh > 0.2) ctx.translate((frnd() - 0.5) * sh, (frnd() - 0.5) * sh);
+
+  drawBackdrop();
+  drawRings();
+  drawHoverHint();
+
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(BX - STEP * 0.22, BY, BW + STEP * 0.44, BH + STEP * 0.2);
+  ctx.clip();
+  for (let r = 0; r < ROWS; r++){
+    for (let c = 0; c < COLS; c++){
+      const cell = cells[idx(r, c)];
+      if (cell) drawTile(cell, r, c);
+    }
+  }
+  ctx.restore();
+
+  drawFlashLines();
+  drawFX();
+  ctx.restore();
+
+  if (vigLayer) ctx.drawImage(vigLayer, 0, 0, W, H);
+
+  if (flash > 0.004){
+    ctx.fillStyle = 'rgba(214,232,255,' + (flash * 0.16) + ')';
+    ctx.fillRect(0, 0, W, H);
+  }
+}
+
+/* ============================================================
+   12. LOOP
+   ============================================================ */
+let paused = false;
+function frame(ts){
+  requestAnimationFrame(frame);
+  if (paused) return;
+  const t = ts / 1000;
+  let dt = t - lastT;
+  lastT = t;
+  if (!isFinite(dt) || dt <= 0) dt = 1 / 60;
+  dt = Math.min(dt, 0.05);
+  update(dt);
+  render();
+}
+
+/* ============================================================
+   13. INPUT
+   ============================================================ */
+function localPoint(e){
+  const rect = cv.getBoundingClientRect();
+  return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+}
+
+function cellAt(x, y){
+  const c = Math.floor((x - BX) / STEP);
+  const r = Math.floor((y - BY) / STEP);
+  if (r < 0 || r >= ROWS || c < 0 || c >= COLS) return null;
+  return { r: r, c: c };
+}
+
+cv.addEventListener('pointerdown', function(e){
+  if (e.button !== undefined && e.button !== 0 && e.pointerType === 'mouse') return;
+  e.preventDefault();
+  Sfx.resume();
+  try { cv.focus({ preventScroll: true }); } catch(err){}
+  if (state !== 'play') return;
+  cursor.on = false;
+  const p = localPoint(e);
+  const cell = cellAt(p.x, p.y);
+  if (!cell) return;
+  tapCell(cell.r, cell.c);
+}, { passive: false });
+
+cv.addEventListener('pointermove', function(e){
+  if (e.pointerType === 'touch') return;
+  if (state !== 'play'){ hover = { r: -1, c: -1, until: 0 }; return; }
+  const p = localPoint(e);
+  const cell = cellAt(p.x, p.y);
+  if (cell) hover = { r: cell.r, c: cell.c, until: Infinity };
+  else hover = { r: -1, c: -1, until: 0 };
+});
+
+cv.addEventListener('pointerleave', function(){
+  if (hover.until === Infinity) hover = { r: -1, c: -1, until: 0 };
+});
+
+elDailyBtn.addEventListener('click', function(){ Sfx.resume(); startMode('daily'); });
+elClassicBtn.addEventListener('click', function(){ Sfx.resume(); startMode('classic'); });
+elAgain.addEventListener('click', function(){ Sfx.resume(); newGame(); });
+elShare.addEventListener('click', function(){ Sfx.resume(); doShare(); });
+elMenuBtn.addEventListener('click', function(){ goMenu(); });
+elHome.addEventListener('click', function(){
+  Sfx.resume();
+  if (state === 'play'){ askLeave(); return; }
+  goMenu();
+});
+
+function paintMute(){
+  elMute.classList.toggle('muted', Sfx.muted);
+  elMute.setAttribute('aria-label', Sfx.muted ? 'Unmute sound' : 'Mute sound');
+  elMute.setAttribute('aria-pressed', Sfx.muted ? 'true' : 'false');
+}
+elMute.addEventListener('click', function(){ Sfx.toggle(); paintMute(); Sfx.resume(); });
+
+window.addEventListener('keydown', function(e){
+  if (e.defaultPrevented) return;
+  const k = e.key;
+
+  if (k === 'Escape'){
+    if (closeTopModal()){ e.preventDefault(); return; }
+    if (state === 'play'){ e.preventDefault(); askLeave(); }
+    return;
+  }
+  if (k === 'm' || k === 'M'){ Sfx.toggle(); paintMute(); return; }
+  if (k === 'r' || k === 'R'){
+    if (state !== 'menu' && !isModalOpen()){ e.preventDefault(); restartNow(); }
+    return;
+  }
+  if (isModalOpen()) return;
+
+  if (state === 'play'){
+    if (k === 'ArrowUp' || k === 'ArrowDown' || k === 'ArrowLeft' || k === 'ArrowRight'){
+      e.preventDefault();
+      cursor.on = true;
+      if (k === 'ArrowUp') cursor.r = Math.max(0, cursor.r - 1);
+      if (k === 'ArrowDown') cursor.r = Math.min(ROWS - 1, cursor.r + 1);
+      if (k === 'ArrowLeft') cursor.c = Math.max(0, cursor.c - 1);
+      if (k === 'ArrowRight') cursor.c = Math.min(COLS - 1, cursor.c + 1);
+      return;
+    }
+    if (k === 'Enter' || k === ' '){
+      e.preventDefault();
+      cursor.on = true;
+      tapCell(cursor.r, cursor.c);
+      return;
+    }
+  } else if (state === 'over' && (k === 'Enter' || k === ' ')){
+    const ae = document.activeElement;
+    if (ae === document.body || ae === cv){
+      e.preventDefault();
+      newGame();
+    }
+  }
+});
+
+/* ============================================================
+   14. MODALS
+   ============================================================ */
+let modalOpener = null;
+let askHandler = null;
+
+function openModal(id){
+  const m = document.getElementById(id);
+  if (!m) return;
+  if (!isModalOpen()) modalOpener = document.activeElement;
+  m.hidden = false;
+  const focusable = m.querySelector('button, [href], textarea, input, select');
+  if (focusable){ try { focusable.focus({ preventScroll: true }); } catch(e){} }
+}
+function closeModal(m){
+  if (!m) return;
+  m.hidden = true;
+  if (m.id === 'askModal') askHandler = null;
+  if (!isModalOpen() && modalOpener && modalOpener.focus){
+    try { modalOpener.focus({ preventScroll: true }); } catch(e){}
+    modalOpener = null;
+  }
+}
+function isModalOpen(){ return !!document.querySelector('.modal:not([hidden])'); }
+function closeTopModal(){
+  const open = Array.prototype.slice.call(document.querySelectorAll('.modal:not([hidden])'));
+  if (!open.length) return false;
+  closeModal(open[open.length - 1]);
+  return true;
+}
+function askLeave(){
+  askHandler = function(){ goMenu(); };
+  $('askTitle').textContent = 'Leave this run?';
+  $('askText').textContent = mode === 'daily'
+    ? 'This Daily Challenge attempt will end without a result.'
+    : 'Your score for this run will be lost.';
+  $('askYes').textContent = 'Leave run';
+  $('askNo').textContent = 'Keep playing';
+  openModal('askModal');
+}
+
+document.addEventListener('click', function(e){
+  const opener = e.target.closest ? e.target.closest('[data-modal]') : null;
+  if (opener){
+    openModal(opener.getAttribute('data-modal') === 'how' ? 'howModal' : 'privacyModal');
+    return;
+  }
+  const closer = e.target.closest ? e.target.closest('[data-close]') : null;
+  if (closer){
+    closeModal(closer.closest('.modal'));
+  }
+});
+
+document.querySelectorAll('.modal').forEach(function(m){
+  m.addEventListener('click', function(e){ if (e.target === m) closeModal(m); });
+});
+
+$('askYes').addEventListener('click', function(){
+  const fn = askHandler;
+  closeModal($('askModal'));
+  if (fn) fn();
+});
+$('askNo').addEventListener('click', function(){ closeModal($('askModal')); });
+
+/* ============================================================
+   15. BOOT + TEST HOOK
+   ============================================================ */
+function boot(){
+  classicBest = loadClassicBest();
+  best = classicBest;
+  bestAtStart = best;
+  elBest.textContent = fmt(best);
+  elClassicBest.textContent = classicBest ? ('Personal best ' + fmt(classicBest)) : 'Personal best \u2014';
+
+  layout();
+  applyBoard(randomBoard(), true);
+  updateHud(false);
+  paintMute();
+  refreshMenu();
+
+  if ('ResizeObserver' in window){
+    let raf = 0;
+    const ro = new ResizeObserver(function(){
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(function(){ layout(); });
+    });
+    ro.observe(stage);
+  }
+  requestAnimationFrame(frame);
+}
+
+let resizeTimer = null;
+function onResize(){
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(function(){
+    layout();
+  }, 60);
+}
+window.addEventListener('resize', onResize);
+window.addEventListener('orientationchange', onResize);
+
+window.__MF = {
+  info: function(){
+    return {
+      state: state, phase: phase, mode: mode,
+      score: score, best: best, classicBest: classicBest, moves: moves,
+      chain: chainStep, maxChain: maxChain, lines: linesTotal, taps: taps,
+      locked: lock,
+      colors: cells.map(colorOf),
+      target: cells.map(function(c){ return c.base ^ ((Math.round(c.angT / Math.PI) & 1)); }),
+      animating: cells.some(function(c){ return Math.abs(c.ang - c.angT) > 0.02; }),
+      angs: cells.map(function(c){ return Math.round(c.ang * 1000) / 1000; }),
+      dys: cells.map(function(c){ return Math.round(c.dy); }),
+      audio: Sfx.state,
+      muted: Sfx.muted,
+      lastBanner: lastBannerText,
+      daily: { key: dailyKey, day: dailyKey ? dayNo(dailyKey) : null, resetMs: msToReset() },
+      board: { x: BX, y: BY, step: STEP, tile: TILE, w: BW, h: BH },
+      view: { w: W, h: H },
+      cursor: { r: cursor.r, c: cursor.c, on: cursor.on },
+      share: lastShare
+    };
+  },
+  tap: function(r, c){ return tapCell(r, c); },
+  start: function(m){ startMode(m || 'classic'); },
+  newGame: function(){ newGame(); },
+  menu: function(){ goMenu(); },
+  setBoard: function(arr){
+    if (!arr || arr.length !== COLS * ROWS) return false;
+    state = 'play'; phase = 'idle'; lock = false;
+    score = 0; moves = START_MOVES; chainStep = 0; maxChain = 0; linesTotal = 0; taps = 0;
+    curStep = 0; refillQueue = null;
+    elMenu.classList.remove('show');
+    elOver.classList.remove('show');
+    hideBanner();
+    applyBoard(arr.slice(), false);
+    updateHud(false);
+    return true;
+  },
+  setMoves: function(n){ moves = n; updateHud(false); },
+  setScore: function(n){ score = n; updateHud(false); },
+  addMoves: function(n){ moves = Math.min(MAX_MOVES, moves + n); updateHud(false); },
+  queueRefill: function(arr){ refillQueue = arr ? arr.slice() : null; },
+  setSeed: function(s){ rngFn = (s === null || s === undefined) ? null : mulberry32(s >>> 0); },
+  setClock: function(v){
+    if (v === null || v === undefined){ clockOverride = null; }
+    else if (typeof v === 'number'){ clockOverride = v; }
+    else { clockOverride = Date.parse(v); }
+    refreshMenu();
+    return clockOverride;
+  },
+  pause: function(){ paused = true; },
+  resume: function(){ paused = false; },
+  cellCenter: function(r, c){ return { x: cellX(c) + TILE / 2, y: cellY(r) + TILE / 2 }; },
+  colorsNow: function(){ return cells.map(faceColor); },
+  shareText: function(){ return shareText(); },
+  copyShare: function(){ doShare(); return lastShare; },
+  dailyRecord: function(){ return dailyRecord(); },
+  utcKey: function(){ return utcKey(now()); },
+  dayNo: function(k){ return dayNo(k || utcKey(now())); },
+  openModal: openModal,
+  closeModals: function(){ document.querySelectorAll('.modal:not([hidden])').forEach(function(m){ m.hidden = true; }); },
+  modalOpen: isModalOpen
+};
+
+boot();
+
+})();
+</script>
+</body>
+</html>

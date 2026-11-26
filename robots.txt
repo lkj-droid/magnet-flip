@@ -1,0 +1,7 @@
+# Magnet Flip — robots.txt
+# A free, browser-only magnetic chain puzzle game.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://lkj-droid.github.io/magnet-flip/sitemap.xml
