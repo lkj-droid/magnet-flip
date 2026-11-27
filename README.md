@@ -7,7 +7,8 @@ the drop for bonus moves.
 **Play: https://lkj-droid.github.io/magnet-flip/**
 
 - **Daily Challenge** — one board per day, generated from the UTC date, identical for every
-  player in the world, resetting at 00:00 UTC. Share your score and an emoji map of your board.
+  player in the world, resetting at 00:00 UTC. Finish a run and share your score and an emoji
+  map of your board. Play on consecutive days to build a **day streak**.
 - **Classic Run** — a fresh random board every time, 20 moves to start, no clock.
 
 No download, no sign-up, no cookies, no analytics, no advertising and no network requests

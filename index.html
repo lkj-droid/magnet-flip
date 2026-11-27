@@ -233,6 +233,8 @@
   .mode-card .s{display:block;font-size:10.5px;color:rgba(178,196,230,.62);margin-top:2px;line-height:1.32;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .mode-card .m{display:block;font-size:10px;color:rgba(150,176,216,.55);margin-top:3px;font-variant-numeric:tabular-nums}
   .mode-card .m b{color:rgba(214,230,255,.9);font-weight:800}
+  .mode-card .m.stk{color:#ffcf74;font-weight:800;letter-spacing:.01em}
+  .mode-card .m.stk[hidden]{display:none!important}
   .mode-card .go{flex:0 0 auto;color:rgba(150,180,230,.45)}
   .mode-card .go svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
@@ -274,6 +276,9 @@
   .newbest{display:inline-block;margin:14px 0 0;padding:5px 13px;border-radius:999px;
            font-size:10px;font-weight:900;letter-spacing:.16em;color:#0b1322;
            background:linear-gradient(180deg,#ffe9a3,#ffc53d);box-shadow:0 8px 24px rgba(255,190,60,.3)}
+  .over-streak{display:block;margin:10px auto 0;padding:5px 13px;border-radius:999px;width:fit-content;
+               font-size:11px;font-weight:900;letter-spacing:.04em;color:#ffd675;
+               background:rgba(255,190,60,.10);border:1px solid rgba(255,200,80,.26)}
   .hidden{display:none!important}
   .over-links{margin-top:8px;display:flex;justify-content:center;gap:10px}
 
@@ -425,6 +430,7 @@
                 <span class="t">Daily Challenge <span class="badge" id="dailyDay">#1</span></span>
                 <span class="s">One board for everyone, worldwide</span>
                 <span class="m"><span id="dailyBest">Today's best —</span> · <span id="dailyReset">resets 00:00 UTC</span></span>
+                <span class="m stk" id="dailyStreak" hidden>🔥 1-day streak</span>
               </span>
               <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></span>
             </button>
@@ -470,6 +476,7 @@
             <div><span>Best chain</span><b id="overChain">–</b></div>
             <div><span id="overBestLbl">Personal best</span><b id="overBest">0</b></div>
           </div>
+          <p id="overStreak" class="over-streak" hidden>🔥 1-day streak</p>
           <p id="newBest" class="newbest hidden">NEW BEST</p>
           <button id="againBtn" class="cta" type="button">Play again</button>
           <button id="shareBtn" class="cta alt" type="button">Share result</button>
@@ -491,7 +498,7 @@
     <div class="grid">
       <div class="card">
         <h3>Daily Challenge</h3>
-        <p>One board a day, built from the UTC date, so every player in the world opens exactly the same puzzle. It resets at 00:00 UTC. Finish a run and copy a result with your score and an emoji map of your board to share anywhere.</p>
+        <p>One board a day, built from the UTC date, so every player in the world opens exactly the same puzzle. It resets at 00:00 UTC. Finish a run and copy a result with your score and an emoji map of your board to share anywhere — and come back on consecutive days to build a streak.</p>
       </div>
       <div class="card">
         <h3>Classic Run</h3>
@@ -554,7 +561,7 @@
       <h3>Controls</h3>
       <p><span class="kbd">Arrow keys</span> move the board cursor, <span class="kbd">Enter</span> flips the selected tile, <span class="kbd">R</span> restarts, <span class="kbd">M</span> mutes, <span class="kbd">Esc</span> closes dialogs.</p>
       <h3>Daily Challenge</h3>
-      <p>Everyone gets the same board for the UTC day, and it resets at <b>00:00 UTC</b>. When your run ends, press <b>Share result</b> to copy your score and an emoji map of your board.</p>
+      <p>Everyone gets the same board for the UTC day, and it resets at <b>00:00 UTC</b>. Finish a daily run on consecutive UTC days and the menu keeps a <b>day streak</b> for you. When your run ends, press <b>Share result</b> to copy your score, your streak and an emoji map of your board.</p>
     </div>
   </div>
 </div>
@@ -572,7 +579,7 @@
       <h3>No accounts, no tracking</h3>
       <p>Magnet Flip has no sign-up, no cookies, no analytics, no advertising and no third-party scripts. The page makes no requests to any other server while you play.</p>
       <h3>What is stored</h3>
-      <p>Your personal best, today's Daily Challenge result and your sound setting are kept in your browser's <b>local storage</b> so the game can show them again next time. They stay on this device and are never uploaded. Clearing your browser's site data deletes them.</p>
+      <p>Your personal best, today's Daily Challenge result, your daily streak and your sound setting are kept in your browser's <b>local storage</b> so the game can show them again next time. They stay on this device and are never uploaded. Clearing your browser's site data deletes them.</p>
       <h3>Sharing</h3>
       <p><b>Share result</b> only copies a line of text to your clipboard. It sends nothing anywhere; you decide where to paste it.</p>
       <h3>Children</h3>
@@ -632,7 +639,8 @@ const LS = {
   classicBest: 'magnetflip.classic.best.v1',
   legacyBest: 'magnetflip.best.v1',
   mute: 'magnetflip.muted.v1',
-  daily: 'magnetflip.daily.v1'
+  daily: 'magnetflip.daily.v1',
+  streak: 'magnetflip.streak.v1'
 };
 
 const ANG_K = 180, ANG_C = 19;      // angular spring (flip)
@@ -669,6 +677,7 @@ const elScore = $('score'), elBest = $('bestVal'), elMoves = $('moves'),
       elShare = $('shareBtn'), elAgain = $('againBtn'), elMenuBtn = $('menuBtn'),
       elDailyBtn = $('dailyBtn'), elClassicBtn = $('classicBtn'),
       elDailyDay = $('dailyDay'), elDailyBest = $('dailyBest'), elDailyReset = $('dailyReset'),
+      elDailyStreak = $('dailyStreak'), elOverStreak = $('overStreak'),
       elClassicBest = $('classicBest'), elLive = document.createElement('div'),
       elShareField = $('shareField');
 
@@ -1225,16 +1234,63 @@ function saveDailyResult(key){
   return rec;
 }
 
+/* ---- daily streak (UTC days) ---- */
+function readStreak(){
+  const rec = readJSON(LS.streak);
+  if (!rec || typeof rec.lastDate !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(rec.lastDate)){
+    return { current: 0, best: 0, lastDate: null };
+  }
+  const current = Math.max(0, Math.floor(Number(rec.current) || 0));
+  const best = Math.max(current, Math.floor(Number(rec.best) || 0));
+  return { current: current, best: best, lastDate: rec.lastDate };
+}
+function dayGap(fromKey, toKey){
+  const a = Date.parse(fromKey + 'T00:00:00Z'), b = Date.parse(toKey + 'T00:00:00Z');
+  if (!isFinite(a) || !isFinite(b)) return NaN;
+  return Math.round((b - a) / 86400000);
+}
+function bumpStreak(key){
+  const rec = readStreak();
+  if (rec.lastDate === key && rec.current > 0) return rec;   // one count per UTC day
+  const gap = rec.lastDate ? dayGap(rec.lastDate, key) : NaN;
+  if (rec.lastDate && gap < 0) return rec;                   // a clock set back never erases a streak
+  const current = (rec.lastDate && gap === 1) ? rec.current + 1 : 1;
+  const next = { current: current, best: Math.max(rec.best, current), lastDate: key };
+  writeJSON(LS.streak, next);
+  return next;
+}
+function streakEffective(){
+  const rec = readStreak();
+  const today = utcKey(now());
+  if (!rec.lastDate || rec.current <= 0){
+    return { current: 0, best: rec.best, playedToday: false, lastDate: rec.lastDate };
+  }
+  const gap = dayGap(rec.lastDate, today);
+  const alive = (gap === 0 || gap === 1);   // yesterday still counts until today's board is played
+  return { current: alive ? rec.current : 0, best: rec.best, playedToday: gap === 0, lastDate: rec.lastDate };
+}
+function streakLine(st){
+  return '\ud83d\udd25 ' + st.current + '-day streak' + (st.best > st.current ? ' \u00b7 best ' + st.best : '');
+}
+
 function refreshMenu(){
   const key = utcKey(now());
   const rec = dailyRecord();
+  const st = streakEffective();
   elDailyDay.textContent = '#' + dayNo(key);
   elDailyBest.textContent = rec && rec.best ? ('Today\u2019s best ' + fmt(rec.best)) : 'Today\u2019s best \u2014';
   elDailyReset.textContent = countdownText();
+  if (st.current > 0){
+    elDailyStreak.hidden = false;
+    elDailyStreak.textContent = streakLine(st);
+  } else {
+    elDailyStreak.hidden = true;
+  }
   elClassicBest.textContent = classicBest ? ('Personal best ' + fmt(classicBest)) : 'Personal best \u2014';
   elDailyBtn.setAttribute('aria-label',
     'Daily Challenge, day ' + dayNo(key) + ', ' + dayLabel(key) +
-    (rec && rec.best ? ', today\u2019s best ' + fmt(rec.best) : ', not played yet'));
+    (rec && rec.best ? ', today\u2019s best ' + fmt(rec.best) : ', not played yet') +
+    (st.current > 0 ? ', ' + st.current + ' day streak' : ''));
 }
 
 /* ============================================================
@@ -1274,6 +1330,7 @@ function newGame(){
   elMenu.classList.remove('show');
   elOver.classList.remove('show');
   elNewBest.classList.add('hidden');
+  elOverStreak.hidden = true;
   hideBanner();
 
   elModeLbl.textContent = mode === 'daily' ? ('DAILY #' + dayNo(dailyKey)) : 'CLASSIC RUN';
@@ -1451,6 +1508,7 @@ function gameOver(){
   if (mode === 'daily'){
     if (score > best) best = score;
     saveDailyResult(dailyKey);
+    bumpStreak(dailyKey);
   } else {
     if (score > classicBest){ classicBest = score; saveClassicBest(); }
     if (score > best) best = score;
@@ -1466,6 +1524,10 @@ function gameOver(){
   elOverBest.textContent = fmt(best);
   elNewBest.textContent = mode === 'daily' ? 'NEW DAILY BEST' : 'NEW BEST';
   elNewBest.classList.toggle('hidden', !isBest);
+  const st = streakEffective();
+  const showStreak = mode === 'daily' && st.current > 0;
+  elOverStreak.hidden = !showStreak;
+  elOverStreak.textContent = showStreak ? streakLine(st) : '';
   elAgain.textContent = mode === 'daily' ? 'Try today\u2019s board again' : 'Play again';
   elOver.classList.add('show');
   hideBanner();
@@ -1521,6 +1583,8 @@ function shareText(){
   if (mode === 'daily'){
     lines.push('\ud83e\uddf2 MAGNET FLIP \u2014 Daily #' + dayNo(dailyKey));
     lines.push(dayLabel(dailyKey) + ' \u00b7 ' + stats);
+    const st = streakEffective();
+    if (st.current > 0) lines.push(streakLine(st));
   } else {
     lines.push('\ud83e\uddf2 MAGNET FLIP \u2014 Classic');
     lines.push(stats);
@@ -2166,6 +2230,7 @@ window.__MF = {
       muted: Sfx.muted,
       lastBanner: lastBannerText,
       daily: { key: dailyKey, day: dailyKey ? dayNo(dailyKey) : null, resetMs: msToReset() },
+      streak: streakEffective(),
       board: { x: BX, y: BY, step: STEP, tile: TILE, w: BW, h: BH },
       view: { w: W, h: H },
       cursor: { r: cursor.r, c: cursor.c, on: cursor.on },
@@ -2207,6 +2272,8 @@ window.__MF = {
   shareText: function(){ return shareText(); },
   copyShare: function(){ doShare(); return lastShare; },
   dailyRecord: function(){ return dailyRecord(); },
+  streakState: function(){ return streakEffective(); },
+  streakRaw: function(){ return readStreak(); },
   utcKey: function(){ return utcKey(now()); },
   dayNo: function(k){ return dayNo(k || utcKey(now())); },
   openModal: openModal,
