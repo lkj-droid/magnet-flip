@@ -124,7 +124,10 @@
   .score-box{display:flex;flex-direction:column;gap:2px;min-width:0}
   .score-box .lbl{font-size:9.5px;font-weight:800;letter-spacing:.2em;color:var(--dim);white-space:nowrap}
   #score{font-size:clamp(30px,9vw,40px);font-weight:900;line-height:1.02;font-variant-numeric:tabular-nums;
-         letter-spacing:-.01em;text-shadow:0 6px 24px rgba(90,140,255,.28);display:inline-block;transform-origin:left center}
+         letter-spacing:-.01em;text-shadow:0 6px 24px rgba(90,140,255,.28);display:inline-block;transform-origin:left center;
+         transition:color .35s ease,text-shadow .35s ease}
+  #scoreBox.hot #score{color:#fff1d0;text-shadow:0 0 20px rgba(255,172,64,.6),0 6px 24px rgba(255,140,40,.35)}
+  #scoreBox.hot #bestVal{color:#ffd79a}
   .best{font-size:11.5px;color:var(--dim);font-weight:600}
   .best b{color:rgba(214,228,255,.86);font-weight:800}
   .hud-right{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
@@ -168,6 +171,9 @@
               text-shadow:0 0 26px rgba(120,170,255,.75),0 3px 0 rgba(20,45,120,.55),0 8px 24px rgba(0,0,0,.55)}
   #bannerSub{font-size:12.5px;font-weight:900;letter-spacing:.1em;color:#8dffc4;text-transform:uppercase;
              text-shadow:0 0 16px rgba(70,230,150,.55),0 2px 10px rgba(0,0,0,.6)}
+  #banner.hot #bannerMain{color:#ffe6ad;
+              text-shadow:0 0 26px rgba(255,170,60,.9),0 3px 0 rgba(120,60,10,.55),0 8px 24px rgba(0,0,0,.55)}
+  #banner.hot #bannerSub{color:#ffd79a;text-shadow:0 0 16px rgba(255,170,60,.6),0 2px 10px rgba(0,0,0,.6)}
   @keyframes bannerPop{
     0%{opacity:0;transform:translateY(12px) scale(.7)}
     16%{opacity:1;transform:translateY(0) scale(1.09)}
@@ -175,6 +181,25 @@
     70%{opacity:1}
     100%{opacity:0;transform:translateY(-20px) scale(1)}
   }
+
+  /* ---------------- chain heat tag ---------------- */
+  #chainTag{position:absolute;left:50%;z-index:3;display:flex;align-items:center;gap:7px;padding:6px 13px 6px 10px;
+            border-radius:999px;border:1px solid rgba(255,178,77,.4);
+            background:linear-gradient(180deg,rgba(74,44,14,.84),rgba(36,21,8,.88));
+            box-shadow:0 8px 26px rgba(255,140,40,.2),inset 0 1px 0 rgba(255,214,150,.16);
+            opacity:0;pointer-events:none;transform:translate(-50%,-7px) scale(.92);
+            transition:opacity .26s ease,transform .3s cubic-bezier(.2,.9,.2,1),box-shadow .3s}
+  #chainTag.show{opacity:1;transform:translate(-50%,0) scale(1)}
+  #chainTag b{font-size:15px;font-weight:900;letter-spacing:-.01em;color:#ffe3ad;font-variant-numeric:tabular-nums;line-height:1}
+  #chainTag span{font-size:9px;font-weight:800;letter-spacing:.16em;color:rgba(255,206,140,.72);line-height:1}
+  #chainTag i{display:block;width:26px;height:3px;border-radius:2px;background:rgba(255,190,110,.2);overflow:hidden}
+  #chainTag i em{display:block;height:100%;width:34%;border-radius:2px;
+                 background:linear-gradient(90deg,#ffab3d,#ffe6a8);transition:width .3s ease}
+  #chainTag.t3{border-color:rgba(255,224,150,.62);animation:heatPulse 1.15s ease-in-out infinite}
+  #chainTag.show.t3{transform:translate(-50%,0) scale(1.05)}
+  #chainTag.t3 b{color:#fff6dc;text-shadow:0 0 12px rgba(255,196,90,.9)}
+  @keyframes heatPulse{0%,100%{box-shadow:0 8px 24px rgba(255,170,60,.24),inset 0 1px 0 rgba(255,236,180,.2)}
+    50%{box-shadow:0 8px 36px rgba(255,192,92,.5),inset 0 1px 0 rgba(255,236,180,.36)}}
 
   /* ---------------- footer ---------------- */
   #foot{position:absolute;left:0;right:0;bottom:0;padding:0 20px calc(env(safe-area-inset-bottom,0px) + 14px);
@@ -372,7 +397,7 @@
       <p id="cvHelp" class="sr-only">A 5 by 5 grid of magnetic tiles, blue north and red south. Tap a tile, or use the arrow keys to move the cursor and Enter to flip. Flipping turns the chosen tile and the tiles above, below, left and right of it. Fill a whole row or column with one colour to clear it.</p>
 
       <div id="hud">
-        <div class="score-box">
+        <div class="score-box" id="scoreBox">
           <span class="lbl" id="modeLbl">MAGNET FLIP</span>
           <span id="score">0</span>
           <span class="best">BEST <b id="bestVal">0</b></span>
@@ -403,6 +428,8 @@
       </div>
 
       <div id="banner" aria-hidden="true"><b id="bannerMain"></b><span id="bannerSub"></span></div>
+
+      <div id="chainTag" aria-hidden="true"><b id="chainVal">\u00d72</b><span>CHAIN</span><i><em id="chainHeatBar"></em></i></div>
 
       <div id="foot">
         <p id="hint">Tap a tile to flip it and its <b>four neighbours</b></p>
@@ -510,7 +537,7 @@
     <ol>
       <li><b>Tap any tile.</b> It flips, and so do the tiles directly above, below, left and right of it — five in total, fewer at the edges of the board.</li>
       <li><b>Complete a line.</b> When a whole row or column shows one colour, the line flashes and snaps away, and the tiles above drop down to fill the gap with fresh tiles from the top.</li>
-      <li><b>Chain the drop.</b> If the new tiles complete another line straight away, the clear chains. Each step of a chain scores higher and pays more moves.</li>
+      <li><b>Chain the drop.</b> If the new tiles complete another line straight away, the clear chains. Each step of a chain scores higher and pays more moves, and a chain lights the board up — it glows warm for a few seconds, gold from ×3 up.</li>
       <li><b>Spend your moves carefully.</b> Every tap costs one move. Run out and the run ends — but a clear on your last move adds moves before the game checks.</li>
     </ol>
 
@@ -556,6 +583,7 @@
       <p>Tap or click a tile and it flips, together with the tiles <b>above, below, left and right</b> of it. A tile in the middle of the board flips five; a corner flips three.</p>
       <h3>The clear</h3>
       <p>When a complete <b>row or column</b> shows a single colour, the line snaps away, the tiles above fall, and new tiles drop in from the top. If those new tiles complete another line, the clear <b>chains</b> and scores more.</p>
+      <p>A chain also runs the board <b>hot</b>: the frame glows amber, the score turns gold and a chain tag appears under the board. A <b>×3 chain or better</b> turns it brighter and keeps it hot for longer — stay sharp while it lasts.</p>
       <h3>Moves</h3>
       <p>Each tap costs one move. A cleared line pays <b>+2 moves</b>, and any clear on a chain step pays <b>+3 more</b>. You can hold at most 30. When your moves reach zero and nothing is left to clear, the run ends.</p>
       <h3>Controls</h3>
@@ -679,6 +707,8 @@ const elScore = $('score'), elBest = $('bestVal'), elMoves = $('moves'),
       elDailyDay = $('dailyDay'), elDailyBest = $('dailyBest'), elDailyReset = $('dailyReset'),
       elDailyStreak = $('dailyStreak'), elOverStreak = $('overStreak'),
       elClassicBest = $('classicBest'), elLive = document.createElement('div'),
+      elChainTag = $('chainTag'), elChainVal = $('chainVal'), elChainBar = $('chainHeatBar'),
+      elScoreBox = $('scoreBox'),
       elShareField = $('shareField');
 
 elLive.className = 'sr-only';
@@ -740,9 +770,20 @@ const Sfx = (function(){
     src.start();
   }
 
+  function hot(step){
+    const s = Math.min(step, 6);
+    noise(0.26, 0.05, 1500 + s * 260, 'bandpass');
+    tone(1040 * Math.pow(1.12, s), 0, 0.26, 'sine', 0.05, 0.02);
+    tone(1560 * Math.pow(1.12, s), 0, 0.2, 'triangle', 0.026, 0.07);
+  }
+
   return {
     resume(){ ensure(); },
-    flip(i){ tone(560 + i * 34, 760 + i * 34, 0.075, 'triangle', 0.085); noise(0.03, 0.045, 2800, 'highpass'); },
+    flip(i, k){
+      const j = (frnd() - 0.5) * 8;                 // never the same click twice
+      tone(560 + i * 34 + j, 760 + i * 34 + j, 0.07, 'triangle', 0.085, (k || 0) * 0.013);
+      noise(0.028, 0.04, 2800, 'highpass');
+    },
     clear(step, n){
       tone(240, 130, 0.24, 'sine', 0.26);
       noise(0.16, 0.10, 800, 'lowpass');
@@ -754,8 +795,14 @@ const Sfx = (function(){
       }
     },
     chain(step){
-      tone(520 * Math.pow(1.14, Math.min(step, 6)), 0, 0.2, 'triangle', 0.13);
-      tone(780 * Math.pow(1.14, Math.min(step, 6)), 0, 0.16, 'sine', 0.07, 0.05);
+      const s = Math.min(step, 6);
+      tone(520 * Math.pow(1.14, s), 0, 0.2, 'triangle', 0.13);
+      tone(780 * Math.pow(1.14, s), 0, 0.16, 'sine', 0.07, 0.05);
+      if (step >= 2){                       // a warm body under the chain note
+        tone(130 * Math.pow(1.06, s), 0, 0.34, 'sine', 0.15);
+        tone(196 * Math.pow(1.06, s), 0, 0.3, 'sine', 0.07, 0.012);
+      }
+      if (step >= 3) hot(step);             // gear change: air riser + brass shimmer
     },
     over(){ [392, 311, 233].forEach((f, i) => tone(f, f * 0.97, 0.55, 'sine', 0.2, i * 0.17)); },
     start(){ tone(300, 620, 0.16, 'triangle', 0.14); tone(620, 940, 0.13, 'triangle', 0.09, 0.09); },
@@ -805,6 +852,10 @@ let cursor = { r: 2, c: 2, on: false };
 let refillQueue = null;
 
 let lastShare = { text: '', copied: false };
+
+/* chain heat: the board changes gear once a chain is running */
+let heatTier = 0;      // 0 cold, 1 warm (chain x2), 2 hot (chain x3+)
+let heat = 0;          // eased 0..1 towards the tier's look
 
 /* ============================================================
    4. SMALL HELPERS
@@ -920,8 +971,9 @@ function layout(){
   buildStaticLayers();
   buildTileSprites();
 
-  const gap = BY - hudBottom;
-  elBanner.style.top = (gap > 78 ? BY - 74 : BY + BH * 0.3) + 'px';
+  // the clear banner belongs above the board; only drop it over the playfield when there is no room
+  elBanner.style.top = ((BY - 60) >= (hudBottom - 6) ? (BY - 60) : (BY + BH * 0.3)) + 'px';
+  elChainTag.style.top = Math.min(H - 78, BY + BH + STEP * 0.17 + 11) + 'px';
 }
 
 /* ============================================================
@@ -1189,7 +1241,52 @@ function showBanner(main, sub){
   void elBanner.offsetWidth;
   elBanner.classList.add('show');
 }
-function hideBanner(){ elBanner.classList.remove('show'); }
+function hideBanner(){ elBanner.classList.remove('show', 'hot'); }
+
+/* ---- chain heat: a hot streak that cools down again ---- */
+const HEAT_HOLD = [0, 3.6, 6.2];       // seconds the board stays hot after a chain of that tier
+function heatTierFor(step){
+  return step >= 3 ? 2 : (step >= 2 ? 1 : 0);
+}
+let heatUntil = 0, heatStep = 0, lastHeatPct = -1;
+function setHeat(step){
+  const tier = heatTierFor(step);
+  heatTier = tier;
+  if (tier > 0){
+    heatStep = step;
+    heatUntil = time + HEAT_HOLD[tier];
+    lastHeatPct = -1;
+    elChainVal.textContent = '\u00d7' + step;
+    elChainTag.classList.toggle('t3', tier === 2);
+    elChainTag.classList.add('show');
+    elScoreBox.classList.add('hot');
+  } else {
+    heatStep = 0;
+    heatUntil = 0;
+    elChainTag.classList.remove('show', 't3');
+    elScoreBox.classList.remove('hot');
+  }
+}
+function updateHeatBar(){
+  if (heatTier <= 0) return;
+  const pct = Math.max(0, Math.min(100, ((heatUntil - time) / HEAT_HOLD[heatTier]) * 100));
+  const rounded = Math.round(pct);
+  if (rounded !== lastHeatPct){ lastHeatPct = rounded; elChainBar.style.width = rounded + '%'; }
+}
+function spawnEmber(){
+  const side = frnd() < 0.5 ? -1 : 1;
+  particles.push({
+    x: BX + BW / 2 + side * (BW / 2 + STEP * (0.04 + frnd() * 0.14)),
+    y: BY + BH * (0.15 + frnd() * 0.7),
+    vx: (frnd() - 0.5) * 26,
+    vy: -34 - frnd() * 52,
+    life: 0.5 + frnd() * 0.55,
+    t: 0,
+    size: 1.2 + frnd() * 1.9,
+    color: frnd() < 0.35 ? '#fff0c4' : '#ffc266',
+    grav: -26
+  });
+}
 
 let toastTimer = null;
 function toast(text){
@@ -1322,6 +1419,7 @@ function newGame(){
   maxChain = 0;
   linesTotal = 0;
   taps = 0;
+  setHeat(0);
   bestAtStart = best;
   curStep = 0;
   refillQueue = null;
@@ -1364,14 +1462,14 @@ function tapCell(r, c){
   if (c > 0) list.push([r, c - 1]);
   if (c < COLS - 1) list.push([r, c + 1]);
 
-  list.forEach(function(pair){
+  list.forEach(function(pair, k){
     const cell = cells[idx(pair[0], pair[1])];
     if (!cell) return;
     cell.angT += Math.PI;
     cell.puls = 1;
+    Sfx.flip(pair[1], k);
   });
 
-  Sfx.flip(c);
   Sfx.resume();
 
   lock = true;
@@ -1395,6 +1493,8 @@ function resolveStep(step){
   chainStep = step;
   curStep = step;
   maxChain = Math.max(maxChain, step);
+  setHeat(step);
+  if (step >= 3){ for (let i = 0; i < 5; i++) spawnEmber(); }
 
   const n = lines.length;
   linesTotal += n;
@@ -1447,6 +1547,7 @@ function resolveStep(step){
 
   const mainTxt = step > 1 ? ('CHAIN \u00d7' + step) : (n > 1 ? (n + ' LINES!') : 'LINE CLEAR!');
   showBanner(mainTxt, 'moves +' + moveGain);
+  elBanner.classList.toggle('hot', step >= 3);
   showMovePop(moveGain);
   announce((step > 1 ? 'Chain ' + step + '. ' : '') + n + (n === 1 ? ' line cleared. ' : ' lines cleared. ') +
            '+' + gained + ' points. ' + Math.max(0, moves) + ' moves left.');
@@ -1502,6 +1603,7 @@ function gameOver(){
   state = 'over';
   phase = 'over';
   lock = true;
+  setHeat(0);
 
   const isBest = score > bestAtStart;
 
@@ -1544,6 +1646,7 @@ function goMenu(){
   lock = false;
   rngFn = null;
   cursor.on = false;
+  setHeat(0);
   elOver.classList.remove('show');
   elMenu.classList.add('show');
   hideBanner();
@@ -1765,6 +1868,13 @@ function update(dt){
     flash = Math.max(0, flash - dt * 2.4);
   } else { shake = 0; flash = 0; }
 
+  const heatTarget = heatTier > 0 ? 1 : 0;
+  heat += (heatTarget - heat) * Math.min(1, dt * 7);
+  if (Math.abs(heatTarget - heat) < 0.004) heat = heatTarget;
+  if (heatTier > 0){
+    if (time >= heatUntil) setHeat(0); else updateHeatBar();
+  }
+
   if (hover.until !== Infinity && time > hover.until) hover = { r: -1, c: -1, until: 0 };
 
   if (state === 'menu' && time - lastCountdown > 0.5){
@@ -1961,6 +2071,48 @@ function drawFX(){
   ctx.globalAlpha = 1;
 }
 
+function drawHeat(){
+  if (heat <= 0.01) return;
+  const pad = STEP * 0.17;
+  const x = BX - pad, y = BY - pad, w = BW + pad * 2, h = BH + pad * 2, r = STEP * 0.38;
+  const hot = heatTier >= 2;
+  const pulse = REDUCED ? 1 : (0.82 + 0.18 * Math.sin(time * (hot ? 7.4 : 4.8)));
+  const a = heat * pulse;
+
+  ctx.save();
+  ctx.globalCompositeOperation = 'lighter';
+
+  ctx.strokeStyle = hot
+    ? 'rgba(255,209,128,' + (0.52 * a).toFixed(3) + ')'
+    : 'rgba(255,168,72,' + (0.44 * a).toFixed(3) + ')';
+  ctx.lineWidth = Math.max(1.6, STEP * (hot ? 0.055 : 0.04));
+  ctx.shadowColor = hot
+    ? 'rgba(255,192,92,' + (0.8 * a).toFixed(3) + ')'
+    : 'rgba(255,150,60,' + (0.6 * a).toFixed(3) + ')';
+  ctx.shadowBlur = STEP * (hot ? 0.6 : 0.36) * (0.8 + 0.4 * pulse);
+  pathRound(ctx, x, y, w, h, r);
+  ctx.stroke();
+
+  if (hot){                                  // a wider halo: the board is properly cooking
+    ctx.lineWidth = Math.max(1.2, STEP * 0.03);
+    ctx.strokeStyle = 'rgba(255,226,162,' + (0.2 * a).toFixed(3) + ')';
+    ctx.shadowBlur = STEP * 1.15 * pulse;
+    pathRound(ctx, x - STEP * 0.11, y - STEP * 0.11, w + STEP * 0.22, h + STEP * 0.22, r + STEP * 0.11);
+    ctx.stroke();
+  }
+
+  ctx.shadowBlur = 0;
+  const g = ctx.createLinearGradient(0, y, 0, y + h);
+  g.addColorStop(0, 'rgba(255,152,58,' + (0.15 * a).toFixed(3) + ')');
+  g.addColorStop(0.34, 'rgba(255,120,40,0)');
+  g.addColorStop(0.66, 'rgba(255,120,40,0)');
+  g.addColorStop(1, 'rgba(255,152,58,' + (0.12 * a).toFixed(3) + ')');
+  ctx.fillStyle = g;
+  pathRound(ctx, x, y, w, h, r);
+  ctx.fill();
+  ctx.restore();
+}
+
 function render(){
   ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
   ctx.clearRect(0, 0, W, H);
@@ -1986,6 +2138,7 @@ function render(){
   ctx.restore();
 
   drawFlashLines();
+  drawHeat();
   drawFX();
   ctx.restore();
 
@@ -2234,6 +2387,14 @@ window.__MF = {
       board: { x: BX, y: BY, step: STEP, tile: TILE, w: BW, h: BH },
       view: { w: W, h: H },
       cursor: { r: cursor.r, c: cursor.c, on: cursor.on },
+      heat: heatTier,
+      heatLevel: Math.round(heat * 1000) / 1000,
+      heatTag: { hidden: !elChainTag.classList.contains('show'), text: elChainVal.textContent,
+                 cls: elChainTag.className, bar: elChainBar.style.width },
+      bannerHot: elBanner.classList.contains('hot'),
+      hudHot: elScoreBox.classList.contains('hot'),
+      particles: particles.length,
+      embers: particles.filter(function(p){ return p.grav < 0; }).length,
       share: lastShare
     };
   },
@@ -2246,6 +2407,7 @@ window.__MF = {
     state = 'play'; phase = 'idle'; lock = false;
     score = 0; moves = START_MOVES; chainStep = 0; maxChain = 0; linesTotal = 0; taps = 0;
     curStep = 0; refillQueue = null;
+    setHeat(0);
     elMenu.classList.remove('show');
     elOver.classList.remove('show');
     hideBanner();

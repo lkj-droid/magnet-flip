@@ -29,7 +29,8 @@ once the page has loaded. Scores are kept in your own browser's local storage.
 - 5×5 grid of blue **N** and red **S** tiles.
 - A tap flips the chosen tile plus the ones above, below, left and right (three at a corner).
 - A full row or column of one colour clears; tiles fall, new tiles drop in from the top, and a
-  drop that completes another line chains.
+  drop that completes another line chains. A chain runs the board hot — the frame glows, the
+  score turns gold and a chain tag appears under the board until it cools (gold from ×3 up).
 - Score is `100 × (lines cleared)² × chain step`. A clear pays +2 moves (+3 more on a chain
   step), capped at 30 moves.
 
