@@ -979,7 +979,7 @@ function layout(){
 /* ============================================================
    5b. CACHED LAYERS + TILE SPRITES
    ============================================================ */
-let bgLayer = null, boardLayer = null, vigLayer = null;
+let bgLayer = null, boardLayer = null, vigLayer = null, heatLayers = null;
 let tileSprites = null;
 const SPR_M = 0.34;
 
@@ -1062,8 +1062,9 @@ function buildStaticLayers(){
     }
   }
 
-  vigLayer = makeCanvas(W * DPR, H * DPR);
-  const v = vigLayer.getContext('2d');
+  buildHeatLayers();
+
+  vigLayer = makeCanvas(W * DPR, H * DPR);  const v = vigLayer.getContext('2d');
   v.scale(DPR, DPR);
   const vg = v.createRadialGradient(W / 2, H * 0.48, Math.min(W, H) * 0.34,
                                     W / 2, H * 0.48, Math.max(W, H) * 0.8);
@@ -1072,6 +1073,51 @@ function buildStaticLayers(){
   vg.addColorStop(1, 'rgba(0,0,0,0.62)');
   v.fillStyle = vg;
   v.fillRect(0, 0, W, H);
+}
+
+function buildHeatLayers(){
+  // The chain glow is a blurred frame. Blurring it every frame costs ~70ms on a phone,
+  // so each tier is baked once and only its alpha changes while the board is hot.
+  const pad = STEP * 0.17, halo = STEP * 0.52;
+  const w = BW + pad * 2 + halo * 2, h = BH + pad * 2 + halo * 2;
+  const s = Math.min(DPR, 2);
+  heatLayers = { x: BX - pad - halo, y: BY - pad - halo, w: w, h: h, warm: null, hot: null };
+
+  function paint(hot){
+    const cv = makeCanvas(w * s, h * s);
+    const g = cv.getContext('2d');
+    g.scale(s, s);
+    const fx = halo, fy = halo, fw = BW + pad * 2, fh = BH + pad * 2, fr = STEP * 0.38;
+    g.save();
+    g.globalCompositeOperation = 'lighter';
+    g.strokeStyle = hot ? 'rgba(255,209,128,.52)' : 'rgba(255,168,72,.44)';
+    g.lineWidth = Math.max(1.6, STEP * (hot ? 0.055 : 0.04));
+    g.shadowColor = hot ? 'rgba(255,192,92,.8)' : 'rgba(255,150,60,.6)';
+    g.shadowBlur = STEP * (hot ? 0.6 : 0.36);
+    pathRound(g, fx, fy, fw, fh, fr);
+    g.stroke();
+    if (hot){                                  // a wider halo: the board is properly cooking
+      g.lineWidth = Math.max(1.2, STEP * 0.03);
+      g.strokeStyle = 'rgba(255,226,162,.2)';
+      g.shadowBlur = STEP * 1.15;
+      pathRound(g, fx - STEP * 0.11, fy - STEP * 0.11, fw + STEP * 0.22, fh + STEP * 0.22, fr + STEP * 0.11);
+      g.stroke();
+    }
+    g.shadowBlur = 0;
+    const grd = g.createLinearGradient(0, fy, 0, fy + fh);
+    grd.addColorStop(0, 'rgba(255,152,58,.15)');
+    grd.addColorStop(0.34, 'rgba(255,120,40,0)');
+    grd.addColorStop(0.66, 'rgba(255,120,40,0)');
+    grd.addColorStop(1, 'rgba(255,152,58,.12)');
+    g.fillStyle = grd;
+    pathRound(g, fx, fy, fw, fh, fr);
+    g.fill();
+    g.restore();
+    return cv;
+  }
+
+  heatLayers.warm = paint(false);
+  heatLayers.hot = paint(true);
 }
 
 function paintTileFace(g, size, pal){
@@ -2072,44 +2118,13 @@ function drawFX(){
 }
 
 function drawHeat(){
-  if (heat <= 0.01) return;
-  const pad = STEP * 0.17;
-  const x = BX - pad, y = BY - pad, w = BW + pad * 2, h = BH + pad * 2, r = STEP * 0.38;
+  if (heat <= 0.01 || !heatLayers) return;
   const hot = heatTier >= 2;
   const pulse = REDUCED ? 1 : (0.82 + 0.18 * Math.sin(time * (hot ? 7.4 : 4.8)));
-  const a = heat * pulse;
-
+  const L = heatLayers;
   ctx.save();
-  ctx.globalCompositeOperation = 'lighter';
-
-  ctx.strokeStyle = hot
-    ? 'rgba(255,209,128,' + (0.52 * a).toFixed(3) + ')'
-    : 'rgba(255,168,72,' + (0.44 * a).toFixed(3) + ')';
-  ctx.lineWidth = Math.max(1.6, STEP * (hot ? 0.055 : 0.04));
-  ctx.shadowColor = hot
-    ? 'rgba(255,192,92,' + (0.8 * a).toFixed(3) + ')'
-    : 'rgba(255,150,60,' + (0.6 * a).toFixed(3) + ')';
-  ctx.shadowBlur = STEP * (hot ? 0.6 : 0.36) * (0.8 + 0.4 * pulse);
-  pathRound(ctx, x, y, w, h, r);
-  ctx.stroke();
-
-  if (hot){                                  // a wider halo: the board is properly cooking
-    ctx.lineWidth = Math.max(1.2, STEP * 0.03);
-    ctx.strokeStyle = 'rgba(255,226,162,' + (0.2 * a).toFixed(3) + ')';
-    ctx.shadowBlur = STEP * 1.15 * pulse;
-    pathRound(ctx, x - STEP * 0.11, y - STEP * 0.11, w + STEP * 0.22, h + STEP * 0.22, r + STEP * 0.11);
-    ctx.stroke();
-  }
-
-  ctx.shadowBlur = 0;
-  const g = ctx.createLinearGradient(0, y, 0, y + h);
-  g.addColorStop(0, 'rgba(255,152,58,' + (0.15 * a).toFixed(3) + ')');
-  g.addColorStop(0.34, 'rgba(255,120,40,0)');
-  g.addColorStop(0.66, 'rgba(255,120,40,0)');
-  g.addColorStop(1, 'rgba(255,152,58,' + (0.12 * a).toFixed(3) + ')');
-  ctx.fillStyle = g;
-  pathRound(ctx, x, y, w, h, r);
-  ctx.fill();
+  ctx.globalAlpha = Math.min(1, heat * pulse);
+  ctx.drawImage(hot ? L.hot : L.warm, L.x, L.y, L.w, L.h);
   ctx.restore();
 }
 
