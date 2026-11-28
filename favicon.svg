@@ -1,22 +1,32 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Magnet Flip">
   <defs>
+    <linearGradient id="face" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f2e7d1"/>
+      <stop offset="1" stop-color="#dccaa7"/>
+    </linearGradient>
     <linearGradient id="b" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#6d97ff"/>
-      <stop offset=".55" stop-color="#2f63f0"/>
-      <stop offset="1" stop-color="#122e94"/>
+      <stop offset="0" stop-color="#4e80b0"/>
+      <stop offset=".52" stop-color="#2f5c8c"/>
+      <stop offset="1" stop-color="#1a3550"/>
     </linearGradient>
     <linearGradient id="r" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#ff8b96"/>
-      <stop offset=".55" stop-color="#e8344f"/>
-      <stop offset="1" stop-color="#7f0a1f"/>
+      <stop offset="0" stop-color="#d06a4d"/>
+      <stop offset=".52" stop-color="#b8492f"/>
+      <stop offset="1" stop-color="#74261a"/>
+    </linearGradient>
+    <linearGradient id="sheen" x1="0" y1="0" x2=".8" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".28"/>
+      <stop offset=".55" stop-color="#fff" stop-opacity="0"/>
     </linearGradient>
   </defs>
-  <rect width="64" height="64" rx="15" fill="#070b13"/>
-  <rect x="6" y="6" width="52" height="52" rx="13" fill="url(#b)"/>
-  <path d="M32 6h13a13 13 0 0 1 13 13v26a13 13 0 0 1-13 13H32z" fill="url(#r)"/>
-  <rect x="31" y="12" width="2" height="40" fill="#060a14" opacity=".55"/>
-  <text x="19.5" y="41" font-family="Inter,system-ui,Arial,sans-serif" font-size="19" font-weight="900"
-        fill="#fff" text-anchor="middle" opacity=".95">N</text>
-  <text x="45" y="41" font-family="Inter,system-ui,Arial,sans-serif" font-size="19" font-weight="900"
-        fill="#fff" text-anchor="middle" opacity=".95">S</text>
+  <rect width="64" height="64" rx="13" fill="#1f2824"/>
+  <rect x="7.5" y="7.5" width="49" height="49" rx="12" fill="url(#face)"/>
+  <rect x="11" y="11" width="42" height="42" rx="9" fill="url(#b)"/>
+  <path d="M32 11h12a9 9 0 0 1 9 9v24a9 9 0 0 1-9 9H32z" fill="url(#r)"/>
+  <rect x="11" y="11" width="42" height="42" rx="9" fill="url(#sheen)"/>
+  <rect x="31" y="11" width="2" height="42" fill="#2a1a10" opacity=".55"/>
+  <text x="21" y="41" font-family="system-ui,Arial,Helvetica,sans-serif" font-size="17" font-weight="800"
+        fill="#fff9eb" text-anchor="middle">N</text>
+  <text x="43" y="41" font-family="system-ui,Arial,Helvetica,sans-serif" font-size="17" font-weight="800"
+        fill="#fff9eb" text-anchor="middle">S</text>
 </svg>

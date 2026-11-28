@@ -14,19 +14,25 @@ the drop for bonus moves.
 No download, no sign-up, no cookies, no analytics, no advertising and no network requests
 once the page has loaded. Scores are kept in your own browser's local storage.
 
+The board is drawn as a physical toy: an enamel N/S magnet in each carved well of a cream
+lacquer tray, resting on a dark green felt table. Every light in the interface comes from the
+same top-left source — rim highlights on the top edge, shadows below, one specular sweep on
+each magnet. The game's own artwork, drawn in canvas and CSS; no image files, fonts or
+libraries are fetched.
+
 ## Contents of this repository
 
 | File | What it is |
 | --- | --- |
 | `index.html` | The whole game — markup, styles and script in one page |
-| `favicon.svg` | The magnet mark |
+| `favicon.svg` | The enamel magnet mark |
 | `og-cover.png` | 1200×630 social preview card |
 | `robots.txt` | Crawler rules |
 | `sitemap.xml` | Sitemap for search engines |
 
 ## How it works
 
-- 5×5 grid of blue **N** and red **S** tiles.
+- 5×5 grid of blue **N** and red **S** enamel magnets.
 - A tap flips the chosen tile plus the ones above, below, left and right (three at a corner).
 - A full row or column of one colour clears; tiles fall, new tiles drop in from the top, and a
   drop that completes another line chains. A chain runs the board hot — the frame glows, the
